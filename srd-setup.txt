@@ -1,0 +1,51 @@
+Admin
+	* Classification setup
+		-> class-id
+		-> class-name
+				Motorcycle
+				Van
+				Car
+				Pickup-truck
+				
+	* Services setup
+		-> services-id
+		-> class-id
+				Motorcycle
+				Van
+				Car
+				Pickup-truck
+		-> services-name
+				Body Wash 
+				Body Wash and Shine
+				Body Wash and Shine and Wax
+				
+		-> services-price
+				Body Wash - 50
+				Body Wash and Shine - 70
+				Body Wash and Shine and Wax - 85
+				
+		-> services-status - (check this if already in used, cannot be updated into unavailable)
+				Available/Unavailable
+		
+	
+	* Employee
+		-> name
+		-> email
+		-> password
+		-> cpassword
+		-> gender
+		-> mobile_no
+		-> secquestion
+		-> answer
+		-> saStatus - always 0 if user only
+		-> islogin
+		-> loginattemp
+		-> acountlock
+		
+		
+	* User setup
+		-> Name
+		-> Contact Number
+		-> Status (Active/Inactive)
+		
+	
