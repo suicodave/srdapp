@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use function Ramsey\Uuid\v1;
+
 class AdminController extends Controller
 {
     function Fails(){
@@ -47,7 +49,7 @@ class AdminController extends Controller
 
     public function storeServicesClass(){
         $getdata = Classification::select('id','vehicletype','status')->get();
-        return view('admin.classification')->with('dataserclass',$getdata);
+        return view('adminPanel.classification')->with('dataserclass',$getdata);
     }
 
     public function postClassification(Request $request){
@@ -104,8 +106,7 @@ class AdminController extends Controller
 
                     ->leftJoin('classification_services','classification_services.id','srdservices.classification')
                     ->get();
-                  //  dd($showServices);
-        return view('admin.services')->with('classes',$getclassification)->with('services',$showServices);
+        return view('adminPanel.services')->with('classes',$getclassification)->with('services',$showServices);
     }
 
     public function postServices(Request $request){
@@ -127,7 +128,7 @@ class AdminController extends Controller
        $insservices->servicesname = $servicesname;
        $insservices->classification = $classificationid;
        $insservices->price =$price;
-       $insservices->status = 1;
+       $insservices->status = 'Available';
        $insservices->maker = Auth::user()->name;
        $insservices->save();
        return $this->Error1();
@@ -179,7 +180,8 @@ class AdminController extends Controller
     public function ShowEmployees(){
             $getUsers = User::where('saStatus',0)
                         ->select('name','email','gender','mobile_no','status','loginattemp')->get();
-            return view('admin.employee')->with('usersdetails',$getUsers);
+
+            return view('adminPanel.employee')->with('usersdetails',$getUsers);
     }
 
     public function createEmployee(Request $request){

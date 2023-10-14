@@ -17,7 +17,7 @@
                     </div>
                     <div class="about-content">
                         <p>
-                            Lorem ipsum dolor sit amet elit. In vitae turpis. Donec in hendre dui, vel blandit massa. Ut vestibu suscipi cursus. Cras quis porta nulla, ut placerat risus. Aliquam nec magna eget velit luctus dictum
+                            SRD Car Spa Online Appointment System. A digital platform designed to streamline and facilitate the appointment scheduling process for customers seeking car spa services.
                         </p>
                         <ul>
                             <li><i class="far fa-check-circle"></i>Seats washing</li>
@@ -25,7 +25,6 @@
                             <li><i class="far fa-check-circle"></i>Interior wet cleaning</li>
                             <li><i class="far fa-check-circle"></i>Window wiping</li>
                         </ul>
-                        <a class="btn btn-custom" href="about.php">Learn More</a>
                     </div>
                 </div>
             </div>

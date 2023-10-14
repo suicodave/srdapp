@@ -14,14 +14,16 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/',[App\Http\Controllers\AdminController::class,'showIndex'])->name('index');
 Route::get('About Us',[App\Http\Controllers\AdminController::class,'showAbout'])->name('about');
 Route::get('Services',[App\Http\Controllers\AdminController::class,'showServices'])->name('services');
 
+Route::post('/CreateBooking',[App\Http\Controllers\BookingController::class,'bookservices'])->name('bookednow');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/classification',[App\Http\Controllers\AdminController::class, 'storeServicesClass'])->name('Classification');
 
 Route::post('/storelassification',[App\Http\Controllers\AdminController::class,'postClassification'])->name('addClassification');
@@ -37,6 +39,11 @@ Route::post('/deleteservices',[App\Http\Controllers\AdminController::class,'drop
 Route::get('/showemployee',[App\Http\Controllers\AdminController::class,'ShowEmployees'])->name('addEmployee');
 Route::post('/addemployee',[App\Http\Controllers\AdminController::class,'createEmployee'])->name('addemployee');
 
+Route::get('/ShowBooking',[App\Http\Controllers\AdminBookingController::class,'viewbooking'])->name('showbooking');
+Route::get('/viewBooking/{bid}',[App\Http\Controllers\AdminBookingController::class,'viewbookingdetails'])->name('viewbookingdetails');
+
+Route::get('/viewSchedule',[App\Http\Controllers\AdminBookingController::class,'bookedschedule'])->name('scheduling');
+
 
 Route::controller(App\Http\Controllers\Auth\AuthOtpController::class)->group(function(){
     Route::get('otp/login', 'login')->name('otp.login');
@@ -45,5 +52,5 @@ Route::controller(App\Http\Controllers\Auth\AuthOtpController::class)->group(fun
     Route::post('otp/login', 'loginWithOtp')->name('otp.getlogin');
 });
 
-
+Route::post('/destroy/{user_id}',[App\Http\Controllers\Auth\LogoutController::class,'destroySession'])->name('logouts');
 

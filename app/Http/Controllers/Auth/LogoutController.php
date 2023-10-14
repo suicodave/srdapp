@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class LogoutController extends Controller
 {
-    public function destroy(Request $request){
+    public function destroySession(Request $request){
         dd($request->all());
     }
 }

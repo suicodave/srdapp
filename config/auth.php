@@ -94,6 +94,11 @@ return [
             'throttle' => 60,
         ],
     ],
+    'throttle' => [
+        'enabled' => true,
+        'max_attempts' => 3, // Maximum number of login attempts before lockout
+        'decay_minutes' => 5, // Lockout duration in minutes
+    ],
 
     /*
     |--------------------------------------------------------------------------

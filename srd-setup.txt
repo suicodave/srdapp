@@ -28,6 +28,7 @@ Admin
 				Available/Unavailable
 		
 	
+	
 	* Employee
 		-> name
 		-> email
@@ -43,9 +44,33 @@ Admin
 		-> acountlock
 		
 		
-	* User setup
-		-> Name
-		-> Contact Number
-		-> Status (Active/Inactive)
+	* Booking
+		-> id
+		-> employeeid
+		-> classid
+		-> servicesid
+		-> bookingId as priornumber
+		-> fullName
+		-> mobileNumber
+		-> washDate
+		-> washTime
+		-> message
+		-> status (pending,inprogess,done)
+		-> paymentMode ( cash )
+		-> txnNumber ( auto-generated)
+		-> postingDate ( when nag bayad )
+		-> employeeidremarks 
+		-> lastUpdationDate
+		
+	Booking Cancellation
+		->cid
+		->bookingId
+		->
+		->reason
+		
+	
+	
+	
+	
 		
 	

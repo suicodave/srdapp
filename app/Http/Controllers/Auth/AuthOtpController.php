@@ -24,6 +24,7 @@ class AuthOtpController extends Controller
 
         /* Generate An OTP */
         $userOtp = $this->generateOtp($request->mobile_no);
+
         $userOtp->sendSMS($request->mobile_no);
 
         return redirect()->route('otp.verification', ['user_id' => $userOtp->user_id])
@@ -77,7 +78,7 @@ class AuthOtpController extends Controller
         }
 
         $user = User::whereId($request->user_id)->first();
-
+        dd($request->user_id);
         if($user){
 
             $userOtp->update([

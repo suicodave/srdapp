@@ -97,7 +97,7 @@
                                 </ul>
                         </li>
 
-                        <li><a href="add-booking.php"><i class="fa fa-user" aria-hidden="true"></i>  <span>Booking</span><div class="clearfix"></div></a></li>
+                        <li><a href="{{route('showbooking')}}"><i class="fa fa-user" aria-hidden="true"></i>  <span>Booking</span><div class="clearfix"></div></a></li>
 
 
                         <li id="menu-academico" ><a href="#"><i class="fa fa-files-o" aria-hidden="true"></i><span>Employee</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
@@ -106,7 +106,7 @@
                                     <li id="menu-academico-avaliacoes" ><a href="">Add Users</a></li>
                                 </ul>
                         </li>
-                        <li><a href="manage-enquires.php"><i class="fa fa-file-text-o" aria-hidden="true"></i>  <span>Manage Enquiries</span><div class="clearfix"></div></a></li>
+                        <li><a href="manage-enquires.php"><i class="fa fa-file-text-o" aria-hidden="true"></i>  <span>Notifications</span><div class="clearfix"></div></a></li>
 
                         @guest
                             @if (Route::has('login'))
@@ -120,10 +120,18 @@
                         <li id="menu-academico" ><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span>Settings</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
                             <ul id="menu-academico-sub" >
                             <li id="menu-academico-avaliacoes" ><a href="about.php">Change Password</a></li>
-                            <li id="menu-academico-avaliacoes" ><a href="{{ route('logout') }}">Logout</a></li>
-                            <form id="logout-form" method="POST" action="{{ route('logout') }}"  class="d-none">
+                            <li id="menu-academico-avaliacoes">
+                                <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                 Logout
+                             </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            <input type="userid" name="user_id" value="{{Auth::user()->id}}">
                                 @csrf
                             </form>
+                            </li>
+
                             </ul>
                         </li>
                         @endguest
