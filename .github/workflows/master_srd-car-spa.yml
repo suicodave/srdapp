@@ -63,4 +63,4 @@ jobs:
           app-name: 'srd-car-spa'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2EEEC36093714D438BBFB967CE44C712 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DC26BB2D4DAE419CAC6BC904F38A6CE9 }}
