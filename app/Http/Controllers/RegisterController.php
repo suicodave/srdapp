@@ -71,6 +71,7 @@ class RegisterController extends Controller
             'gender' => $data['gender'],
             'secquestion' => $data['secquestion'],
             'answer' => $data['answer'],
+            'status' => 'Active',
             'saStatus' => $data['saStatus'],
             'islogin' => $data['islogin'],
             'loginattemp' => $data['loginattemp'],

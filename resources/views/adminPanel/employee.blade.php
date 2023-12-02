@@ -1,50 +1,76 @@
 @extends('adminPanel.adminpanel-layout')
 
 @section('content')
-<div class="row">
-    <div class="col-xs-12">
-        <div class="card-header">
-            <a href="#" title="Add" style="float: right;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">Add Employee</a>
-        </div>
-        <div class="card-body">
-            <table id="example2" class="table table-bordered table-striped" style="font-size: 14px;">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Fullname</th>
-                        <th>Phone Number</th>
-                        <th>Status</th>
-                        <th>Login Attempt</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <?php $x=1;?>
-                @foreach ($usersdetails as $itemuser)
-                    <tr>
-                        <td>{{$x++;}}</td>
-                        <td>{{$itemuser->name }}</td>
-                        <td>{{$itemuser->mobile_no }}</td>
-                        <td>{{$itemuser->status }}</td>
-                        <td>{{$itemuser->loginattemp }}</td>
-                        <td>Edit | Delete</td>
-                    </tr>
-                @endforeach
+<div class="main-content-inner">
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="{{route('home')}}">Home</a>
+            </li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card-header">
+                    <a href="#" title="Add" style="float: right;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">Add Employee</a>
+                </div>
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-striped" style="font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Fullname</th>
+                                <th>Phone Number</th>
+                                <th>Status</th>
+                                <th>Login Attempt</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <?php $x=1;?>
+                        @foreach ($usersdetails as $itemuser)
+                            <tr>
+                                <td>{{$x++;}}</td>
+                                <td>{{$itemuser->name }}</td>
+                                <td>{{$itemuser->mobile_no }}</td>
+                                <td>{{$itemuser->status }}</td>
+                                <td>{{$itemuser->loginattemp }}</td>
+                                <td style="text-align: center;"><a data-toggle="modal"
+                                    data-id="{{$itemuser->id}}"
+                                    data-name="{{$itemuser->name}}"
+                                    data-email="{{$itemuser->email}}"
+                                    data-gender="{{$itemuser->gender}}"
+                                    data-mobile_no="{{$itemuser->mobile_no}}"
+                                    data-status="{{$itemuser->status}}"
+                                    data-loginattemp="{{$itemuser->loginattemp}}"
+                                    data-password="{{$itemuser->password}}"
+                                    data-cpassword="{{$itemuser->cpassword}}"
+                                    data-secquestion="{{$itemuser->secquestion}}"
+                                    data-answer="{{$itemuser->answer}}"
+                                    class="btn btn-xs btn-info text-danger passingID" data-toggle="modal" data-target="#MyModal" title="Edit">
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i></a>  | <a class="btn btn-xs btn-danger" href="{{route('deleteEmployee',['eid' => $itemuser->id])}}"><i class="ace-icon fa fa-trash-o bigger-120"></i></td>
+                            </tr>
+                        @endforeach
 
 
 
-                <tbody>
-                </tbody>
-            </table>
+                        <tbody>
+                        </tbody>
+                    </table>
 
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 
+
 <!---start add modal-->
-<form action="{{route('addemployee')}}" method="POST">
+<form action="{{route('storeEmployee')}}" method="POST">
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
@@ -71,42 +97,9 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <script>
-                                        function validatePassword() {
-                                            var password = document.getElementById("password").value;
-                                            var password_confirm = document.getElementById("password_confirm").value;
-                                            var errorElement = document.getElementById("passwordError");
-                                            var strengthElement = document.getElementById("passwordStrength");
-                                            var inputPasswordElement = document.getElementById("inputPassword");
-                                            var alphanumericRegex = /^[0-9a-zA-Z]+$/;
-
-                                            if (password !== password-confirm) {
-                                                errorElement.innerHTML = "Passwords do not match!";
-                                                strengthElement.innerHTML = "";
-                                            } else if (!alphanumericRegex.test(password) || password.length < 8) {
-                                                errorElement.innerHTML = "Password must contain both alphanumeric characters and be at least 8 characters long!";
-                                                strengthElement.innerHTML = "";
-                                            } else {
-                                                errorElement.innerHTML = "";
-                                                var passwordStrength = calculatePasswordStrength(password);
-                                                strengthElement.innerHTML = "Password Strength: " + passwordStrength;
-                                                inputPasswordElement.innerHTML = "Inputted Password: " + password;
-                                            }
-                                        }
-
-                                        function calculatePasswordStrength(password) {
-                                            var strength = "Weak";
-                                            if (password.length >= 12) {
-                                                strength = "Strong";
-                                            } else if (password.length >= 8) {
-                                                strength = "Moderate";
-                                            }
-                                            return strength;
-                                        }
-                                    </script>
 
                                     <div class="form-group">
-                                        <input id="password" placeholder="Password *" oninput="validatePassword()" type="password" class="form-control" name="password" required autocomplete="new-password">
+                                        <input id="password" placeholder=" Temporary Password *" oninput="validatePassword()" type="password" class="form-control" name="password" required autocomplete="new-password">
 
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -114,11 +107,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
-                                        <input id="password_confirm" placeholder="Confirm Password" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+
 
                                     <div class="form-group">
                                         <input id="mobile_no" type="text" placeholder="Mobile Number *" class="form-control @error('mobile_no') is-invalid @enderror" name="mobile_no" value="{{ old('mobile_no') }}" required autocomplete="mobile_no" autofocus>
@@ -165,23 +154,83 @@
 <!---end add modal-->
 
     <!--Update modal-->
-<form action="" method="POST">
+<form action="{{route('editEmployee')}}" method="POST">
     <div class="modal fade" id="MyModal" tabindex="-1" role="dialog" aria-labelledby="my_modalLabel">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="my_modalLabel">Update Classification</h4>
+                    <h4 class="modal-title" id="my_modalLabel">Update Employee</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                 </div>
                 <div class="modal-body">
                     <div class="container" >
                         <div class="row justify-content-md-center" >
-                            <div class="form-group">
-                                <label class="col-form-label" for="classification">Services Classification <small style="color: red;font-weight:bold;">*</small></label>
-                                <textarea name="classification" id="cvehicletype" required autocomplete="false" class="form-control" cols="100" rows="2"></textarea>
-                                {{ $errors->first('classification') }}
-                            </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Full Name *" id="cname" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input  type="email" placeholder="Email *" readonly class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" id="cemail" required autocomplete="email">
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <input  placeholder="Temporary Password " oninput="validatePassword()" type="password" class="form-control" name="password" autocomplete="new-password">
+
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input  type="text" placeholder="Mobile Number *" class="form-control @error('mobile_no') is-invalid @enderror" name="mobile_no" id="cmobile_no" value="{{ old('mobile_no') }}" required autocomplete="mobile_no" autofocus>
+                                        @error('mobile_no')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <select name="status" id="cstatus" class="form-control">
+                                         <option value="">Select Status</option>
+                                         <option value="Active">Active</option>
+                                         <option value="Inactive">Inactive</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                           <select name="gender" id="cgender" class="form-control">
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Male">Female</option>
+                                           </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <select required class="form-control" id="csecquestion" name="secquestion">
+                                            <option class="hidden"  selected disabled>Please select your Sequrity Question</option>
+                                            <option>What is your Birthdate?</option>
+                                            <option>What is Your old Phone Number</option>
+                                            <option>What is your Pet Name?</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" required name="seckey" class="form-control" id="canswer" placeholder="Enter Your Answer *" value="" />
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -199,46 +248,29 @@
     <script type="text/javascript">
     $(".passingID").click(function () {
         var c_id = $(this).attr('data-id');
-        var c_vehicletype = $(this).attr('data-vehicletype');
+        var c_name = $(this).attr('data-name');
+        var c_email = $(this).attr('data-email');
+        var c_gender = $(this).attr('data-gender');
+        var c_mobile_no = $(this).attr('data-mobile_no');
+        var c_status = $(this).attr('data-status');
+        var c_loginattemp = $(this).attr('data-loginattemp');
+        var c_password = $(this).attr('data-password');
+        var c_secquestion = $(this).attr('data-secquestion');
+        var c_answer = $(this).attr('data-answer');
         $("#cid").val( c_id );
-        $("#cvehicletype").val( c_vehicletype );
+        $("#cname").val( c_name );
+        $("#cemail").val( c_email );
+        $("#cgender").val( c_gender );
+        $("#cmobile_no").val( c_mobile_no );
+        $("#cstatus").val( c_status );
+        $("#cloginattemp").val( c_loginattemp );
+        $("#cpassword").val( c_password );
+        $("#csecquestion").val( c_secquestion );
+        $("#canswer").val( c_answer );
         $('#myModal').modal('show');
 
     });
     </script>
-    <!--end update-->
 
-    <!--delete-->
-    <form action="" method="POST">
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Delete Classification</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
-                </div>
-                <div class="modal-body">
-                        Are you sure you want to delete?
-                </div>
-                <div class="modal-footer">
-                        <input type="hidden" name="rowid" id="rid" value="">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-danger" value="Delete">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    @csrf
-    </form>
-    <script type="text/javascript">
-    $(".del_passingID").click(function () {
-        var del_id = $(this).attr('data-id');
-        $("#rid").val( del_id );
-        $('#deleteModal').modal('show');
-    });
-    </script>
-    <!--end delete-->
 @endsection
 

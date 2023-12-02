@@ -27,6 +27,7 @@ class User extends Authenticatable
         'mobile_no',
         'secquestion',
         'answer',
+        'status',
         'saStatus',
         'islogin',
         'loginattemp',

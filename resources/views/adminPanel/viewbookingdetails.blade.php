@@ -1,7 +1,9 @@
 @extends('adminPanel.adminpanel-layout')
 
 @section('content')
+<form action="{{route('createtnxnumber')}}" method="POST">
 <div class="row">
+
     <div class="col-sm-10 col-sm-offset-1">
         <div class="widget-box transparent" id="printableArea">
             <div class="widget-header widget-header-large">
@@ -10,15 +12,40 @@
                 </h3>
                 <?php
                 use App\Models\Booking;
-                $booking= Booking::where('bookingstatus','New')->where('txnNumber',NULL)->select('txnNumber')->get();
-                foreach ($booking as $key => $bookvalue) {
-                    $pnid = $bookvalue->txnNumber;
+                use App\Models\BookingPriority;
+                $booking= Booking::latest('txnNumber')->first();
+
+                $getpn = BookingPriority::where('status',2)->select('id')->count();
+                $latestDates = BookingPriority::select(DB::raw('MAX(dateprocess) as max_date'))
+                    ->groupBy(DB::raw('DATE(dateprocess)'))
+                    ->get()->first();
+
+                //$latestPriority = BookingPriority::max('prioritynumber');
+                if($getpn == 0 ){
+                    $counter = $getpn + 1;
+                }elseif($latestDates->max_date == date('myd')){
+
+                    $latestPriority = BookingPriority::latest('prioritynumber')->where('status',2)->where('dateprocess',date('myd'))
+                    ->get()->first();
+                    $counter =  $latestPriority->prioritynumber + 1;
+                }else{
+                    $counter =  0 + 1;
                 }
 
+
                 ?>
+
                 <div class="widget-toolbar no-border invoice-info">
                     <span class="invoice-info-label">Transaction#:</span>
-                    <span class="red">{{$pnid}}</span>
+
+                        @if($booking->txnNumber == 'Null')
+                           <?php  $pnid = '1000'.$booking->txnNumber;?>
+                        @else
+                            <?php  $pnid = $booking->txnNumber + 1; ?>
+                        @endif
+
+                        <span class="red"><input type="hidden" name="txnno" value="{{$pnid}}">{{$pnid}}</span><br />
+                        <span class="red"><input type="hidden" name="pn" value="{{$counter}}">PN# {{date('myd')}}{{$counter}}</span>
 
                     <br />
                     <span class="invoice-info-label">Date:</span>
@@ -40,8 +67,7 @@
             <div class="widget-body">
                 <div class="widget-main padding-24">
                     <div class="row">
-
-
+                        <input type="hidden" name="bookingid" value="{{$bookinginfo->id}}">
                         <div class="col-sm-12">
                             <div class="row">
                                 <div style="text-align: left;" class="col-xs-12 label label-lg label-success arrowed-in arrowed-right">
@@ -72,10 +98,10 @@
                                         <i class="ace-icon fa fa-caret-right green"></i>Contact Info:&nbsp;{{$bookinginfo->email}}
                                     </li>
                                     <li>
-                                        <i class="ace-icon fa fa-caret-right green"></i>Booking Status:&nbsp;{{$bookinginfo->bookingstatus}}
+                                        <i class="ace-icon fa fa-caret-right green"></i>Booking Status:&nbsp;{{$bookinginfo->statusname}}
                                     </li>
                                     <li>
-                                        <i class="ace-icon fa fa-caret-right green"></i>Branch:&nbsp;{{$bookinginfo->branchcode}}
+                                        <i class="ace-icon fa fa-caret-right green"></i>Branch:&nbsp;{{$bookinginfo->branch_name}}
                                     </li>
                                 </ul>
                             </div>
@@ -136,10 +162,21 @@
             </div>
             @endforeach
         </div>
-        <div>
-            <input type="submit" name="" id="">
-        </div>
-    </div>
-</div>
 
+
+        <div>
+            @foreach($bookings as $bookinginfo)
+                @if($bookinginfo->txnNumber == NULL)
+                    <input type="submit" name="submit" class="btn btn-danger btn-sm" value="Create Priority Number">
+                @else
+                    <span>{{$bookinginfo->statusname}}</span>
+                @endif
+            @endforeach
+        </div>
+
+    </div>
+
+</div>
+@csrf
+    </form>
 @endsection

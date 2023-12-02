@@ -1,46 +1,58 @@
 @extends('adminPanel.adminpanel-layout')
 
 @section('content')
-<div class="row">
-    <div class="col-xs-12">
-        <div class="card-header">
-            <a href="#" title="Add" style="float: right;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">Add Services</a>
-        </div>
-        <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped" style="font-size: 14px;">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Vehicle Type</th>
-                        <th>Services Description</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <?php $x = 1;?>
-                @foreach($services as $itemservices)
+<div class="main-content-inner">
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="{{route('home')}}">Home</a>
+            </li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card-header">
+                    <a href="#" title="Add" style="float: right;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">Add Services</a>
+                </div>
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped" style="font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Vehicle Type</th>
+                                <th>Services Description</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <?php $x = 1;?>
+                        @foreach($services as $itemservices)
 
-                <tr>
-                    <td>{{$x++;}}</td>
-                    <td>{{$itemservices->vehicletype}}</td>
-                    <td>{{ $itemservices->servicesname }}</td>
-                    <td style="text-align: right;"><span class="peso"></span>{{ number_format($itemservices->price,2) }}</td>
-                    <td>{{$itemservices->status}}</td>
-                    <td style="text-align: center;"><a data-toggle="modal"
-                        data-sid="{{$itemservices->sid}}"
-                        data-servicesname="{{$itemservices->servicesname}}"
-                        data-classification="{{$itemservices->id }}"
-                        data-price="{{$itemservices->price }}"
-                        data-status = "{{$itemservices->status}}"
-                        class="text-danger passingID" data-toggle="modal" data-target="#MyModal" title="Edit">
-                    <i class="fa fa-edit"></i></a> | <a data-toggle="modal" data-id="{{ $itemservices->sid }}"  class="text-danger del_passingID" data-toggle="modal" data-target="#deleteModal">
-                    <i class="fa fa-trash"></i></td>
-                </tr>
-                @endforeach
-                <tbody>
-                </tbody>
-            </table>
+                        <tr>
+                            <td>{{$x++;}}</td>
+                            <td>{{$itemservices->vehicletype}}</td>
+                            <td>{{ $itemservices->servicesname }}</td>
+                            <td style="text-align: right;"><span class="peso"></span>{{ number_format($itemservices->price,2) }}</td>
+                            <td>{{$itemservices->status}}</td>
+                            <td style="text-align: center;"><a data-toggle="modal"
+                                data-sid="{{$itemservices->sid}}"
+                                data-servicesname="{{$itemservices->servicesname}}"
+                                data-classification="{{$itemservices->id }}"
+                                data-price="{{$itemservices->price }}"
+                                data-status = "{{$itemservices->status}}"
+                                class="btn btn-xs btn-info text-danger passingID" data-toggle="modal" data-target="#MyModal" title="Edit">
+                                <i class="ace-icon fa fa-pencil bigger-120"></i></a> |<a class="btn btn-xs btn-danger" href="{{route('deleteservices',['sid' => $itemservices->sid])}}">
+                                    <i class="ace-icon fa fa-trash-o bigger-120"></i></td>
+                        </tr>
+                        @endforeach
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -60,12 +72,12 @@
                         <div class="row" style="margin-left: 2px;">
                             <div class="form-group">
                                 <label class="col-form-label" for="servicesname">Services Description <small style="color: red;font-weight:bold;">*</small></label>
-                                <textarea name="servicesname" class="form-control" cols="100" rows="2"></textarea>
+                                <textarea name="servicesname" class="form-control" required=""true style="width: 70%;" cols="100" rows="2"></textarea>
                                 {{ $errors->first('servicesname') }}
                             </div>
                             <div class="form-group pr-3">
-                                <label for="version" class="col-form-label"></i> Classification</label>
-                                <select name="classid" id="" class="form-control is-warning" autocomplete="off" style="text-align:left;color:red;">
+                                <label for="version" class="col-form-label"></i> Classification <small style="color: red;font-weight:bold;">*</small></label>
+                                <select name="classid" id="" class="form-control is-warning"  required="true" autocomplete="off" style="width: 70%;text-align:left;color:red;">
                                     <option value="">Select Classification</option>
                                 @foreach($classes as $itemclass)
                                     <option value="{{$itemclass->id}}">{{$itemclass->vehicletype}}</option>
@@ -74,8 +86,8 @@
                                 {{ $errors->first('classid') }}
                             </div>
                             <div class="form-group pr-3">
-                                <label class="col-form-label" for="price"><i class="far fa-bell"></i> Price <small style="color: red;font-weight:bold;">*</small></label>
-                                <input type="number" min="0" step="1" class="form-control is-warning" placeholder="" name="price" required="true" autocomplete="off" style="text-align:right;color:red;">
+                                <label class="col-form-label" for="price"> Price <small style="color: red;font-weight:bold;">*</small></label>
+                                <input type="number" min="0" step="1" class="form-control is-warning" placeholder="" name="price" required="true" autocomplete="off" style="width: 70%;text-align:right;color:red;">
                                 {{ $errors->first('price') }}
                             </div>
 
@@ -109,12 +121,12 @@
                         <div class="row" style="margin-left: 2px;">
                             <div class="form-group">
                                 <label class="col-form-label" for="servicesname">Services Description <small style="color: red;font-weight:bold;">*</small></label>
-                                <textarea name="servicesname" id="cservicesname" class="form-control" cols="100" rows="2"></textarea>
+                                <textarea name="servicesname" id="cservicesname" class="form-control" style="width: 70%;" cols="100" rows="2"></textarea>
                                 {{ $errors->first('servicesname') }}
                             </div>
                             <div class="form-group pr-3">
-                                <label for="version" class="col-form-label"></i> Classification</label>
-                                <select name="classid" id="cclassification" class="form-control is-warning" autocomplete="off" style="text-align:left;color:red;">
+                                <label for="version" class="col-form-label"></i> Classification <small style="color: red;font-weight:bold;">*</small></label>
+                                <select name="classid" id="cclassification" class="form-control is-warning" autocomplete="off" style="width:70%; text-align:left;color:red;">
                                         <option value="">Select Classification</option>
                                         @foreach($classes as $itemclass)
                                             <option value="{{$itemclass->id}}">{{$itemclass->vehicletype}}</option>
@@ -123,13 +135,13 @@
                                 {{ $errors->first('classid') }}
                             </div>
                             <div class="form-group pr-3">
-                                <label class="col-form-label" for="price"><i class="far fa-bell"></i> Price <small style="color: red;font-weight:bold;">*</small></label>
-                                <input type="number" min="0" step="1" class="form-control is-warning" placeholder="" name="price" id="cprice" required="true" autocomplete="off" style="text-align:right;color:red;">
+                                <label class="col-form-label" for="price"> Price <small style="color: red;font-weight:bold;">*</small></label>
+                                <input type="number" min="0" step="1" class="form-control is-warning" placeholder="" name="price" id="cprice" required="true" autocomplete="off" style="width:70%; text-align:right;color:red;">
                                 {{ $errors->first('price') }}
                             </div>
                             <div class="form-group pr-3">
-                                <label class="col-form-label" for="price"><i class="far fa-bell"></i> Status <small style="color: red;font-weight:bold;">*</small></label>
-                                <select name="status" id="cstatus" class="form-control is-warning">
+                                <label class="col-form-label" for="price">Status <small style="color: red;font-weight:bold;">*</small></label>
+                                <select name="status" id="cstatus" style="width: 70%;" class="form-control is-warning">
                                         <option value="">Select Status</option>
                                         <option value="Available">Available</option>
                                         <option value="Unavailable">Unavailable</option>
@@ -171,7 +183,7 @@
     <!--end update-->
 
     <!--delete-->
-<form action="{{route('deleteservices')}}" method="POST">
+<form action="" method="POST">
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

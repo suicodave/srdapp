@@ -65,7 +65,7 @@ class BookingController extends Controller
         $insertbooking = new Booking();
         $insertbooking->classid = $classid;
         $insertbooking->servicesid = $servicesid;
-        $insertbooking->branchcode = 'Maranding';
+        $insertbooking->branchcode = '1';
         $insertbooking->bookingnumber = $bno;
         $insertbooking->fullName = $fullname;
         $insertbooking->mobileNumber = $mobilenumber;
@@ -73,7 +73,7 @@ class BookingController extends Controller
         $insertbooking->washTime = $ptime;
         $insertbooking->message = $message;
         $insertbooking->email = $email;
-        $insertbooking->bookingstatus = 'New';
+        $insertbooking->bookingstatus = 1;
         $insertbooking->save();
 
         return $this->Error1();

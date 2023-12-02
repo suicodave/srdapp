@@ -1,4 +1,114 @@
+Users/Client View
+	Create booking
+	
+	---  terms and conditions 
+	-- OTP Notification booking number
+	
+	
+recovery	
+GF93F5PN7D9SECHX3V1TYJDJ
+------------------------------------------------------------------
 Admin
+	-> set/create the following
+		1. Classification/Type of Vehicles - (Motorcycle,Van, Car, Pickup-truck)
+		2. Services - (Body Wash,Body Wash and Shine, Body Wash and Shine and Wax ) with price
+		3. Employee - create user like cashier for client payment create transaction or 
+					give transaction number to the client via email or OTP as client prior number
+			
+		4. View Booking( New, Completed, and Cancellation)
+		5. View the sales
+		
+User(cashier)
+	-> View the new bookingId
+	-> create tnx number ->  i email client  
+	-> accept initial payment
+if walk-in
+	-> 
+	
+User Tech/washier
+	-> proceed the booked id and do the services
+	-> complete the services
+
+-------------------------------------------------------------------
+Admin - Earl Joel P Balendres / earlbalendres@gmail.com / 09261711011
+Cashier - Krisha Nicole Q Comeros / krishanicolecomeros@gmail.com /09510751508
+Automotive Detailer - Tomas G Villanueva III / thomasvillanueva111@gmail.com /09150498872
+
+Admin
+	* Status - done (add/edit/delete) IN ORDER
+			New Reserved - this is for new booking
+			Pending - If transaction number has made by the cashier
+			On going - During the acceptance of booking after transaction number has made by the cashier.
+			Completed - If the task has already done.
+			Canceled - If the booking is canceled and approved by the client true call or text or email.
+			
+			
+	* Branches - done (add/edit/delete)
+			Maranding Branches - vailable
+			Kapatagan Branch - Available
+			
+	* Designation - done (add/edit/delete)
+			Cashier 
+			Automotive Detailer
+			
+	* Salary Grade - done (add/edit/delete)
+			G1 - Salary Grade 1
+			G2 - Salary Grade 2
+			G3 - 	Salary Grade 3
+			
+	* Employee - done (add/edit/delete) Balikanan
+		
+		
+	* UserAaccount - done (add/edit/delete)
+	
+	* Services
+		-> Type of Services - done (add/edit/delete)
+			
+		-> Services Offer - done (add/edit/delete)
+		
+	* Booking
+		-> Schedules -
+		-> Booking - done
+		-> Client Booking -
+		
+	* Reports
+		-> View Employee ( Available/Unavailable )
+		-> View User Account ( Active and Inactive )
+		-> View Booking ( New, Pending, Completed, and Canceled )
+		-> View Schedules (available and unavailable )
+		-> View Sales 
+		-> View Notifications
+		
+
+Cashier 
+	* Create Transaction Number and Priority Number
+	* Canceled Booking
+	* Accept Payment for booking services
+	* View Sales as per maker
+	
+Tech
+	* Accept Client Booking as per priority number follows - done
+	* Set the booking as completed if it is done
+	* View Sales as per maker
+	
+Client
+	* View Services offer
+	* Make reservation (the system must notify the client as pero booking number via OTP )
+
+
+
+
+
+
+
+
+
+
+	*Branches 
+		-> id
+		-> branch_name
+		-> status (Available/Unavailable)
+		
 	* Classification setup
 		-> class-id
 		-> class-name
@@ -43,6 +153,32 @@ Admin
 		-> loginattemp
 		-> acountlock
 		
+	SRD-Branch
+		branchid
+		branch-name
+		address
+		telno
+		
+	Designation
+		designationid
+		position (Cashier,Tech Support)
+	
+	SalaryGrade
+		sgid
+		sgcode - (G1,G2,G3)
+		description - ( Salary Grade 1)
+		period - (Daily/Weekly/Monthly)
+		amount - (100/700/3000)
+		
+
+		
+	UserAaccount 
+		uaid
+		employeeid
+		branchid
+		designationid
+		salarygrade
+		
 		
 	* Booking
 		-> id
@@ -62,15 +198,90 @@ Admin
 		-> employeeidremarks 
 		-> lastUpdationDate
 		
-	Booking Cancellation
-		->cid
-		->bookingId
-		->
-		->reason
+	BookingPriority
+		-> pid
+		-> bookingId
+		-> prioritynumber
+		-> dateprocess
 		
-	
-	
-	
+		-> during acceptance of booking, update bookingstatus in booking table
+		-> during acceptance of booking, update maxtimeprocess and status(set to P) in bookingpriority table
+			
+	Sales
+		salesid
+		bookingid - bid
+		bpid - pid
+		status - Pending for Payment
+		salesdate - 
+		tnxtype
+		actiontakenby
+		amount
+		cashier
+		
+	Booking Cancellation
+		-> cid
+		-> bookingId
+		-> status
+		-> reason
+		
+		New Reserved - this is for new booking
+		Pending - If transaction number has made by the cashier
+		On going - During the acceptance of booking after transaction number has made by the cashier.
+		Completed - If the task has already done.
+		Canceled - If the booking is canceled and approved by the client true call or text or email.
+				
+				
+--------------
+
+viewpendingforpayment
+select `a`.`salesid` AS `salesid`,`b`.`bookingnumber` AS `bookingnumber`,`b`.`fullName` AS `clients`,`d`.`vehicletype` AS `vehicletype`,`e`.`servicesname` AS `servicesname`,`g`.`branch_name` AS `branch_name`,`b`.`washDate` AS `washDate`,`b`.`washTime` AS `washTime`,`a`.`created_at` AS `postingdate`,`a`.`status` AS `status` from ((((((`srdsales` `a` left join `booking` `b` on((`a`.`bookingid` = `b`.`id`))) left join `bookingpriority` `c` on((`a`.`bpid` = `c`.`pid`))) left join `classification_services` `d` on((`b`.`classid` = `d`.`id`))) left join `srdservices` `e` on((`b`.`servicesid` = `e`.`sid`))) left join `status` `f` on((`b`.`bookingstatus` = `f`.`statusid`))) left join `srdbranch` `g` on((`b`.`branchcode` = `g`.`id`))) where (`a`.`status` = 'Pending for Payment')
+
+viewpendingforpayment_tmp
+select `a`.`salesid` AS `salesid`,`b`.`bookingnumber` AS `bookingnumber`,`e`.`price` AS `price`,`b`.`fullName` AS `clients`,`c`.`maker` AS `performedby`,`d`.`vehicletype` AS `vehicletype`,`e`.`servicesname` AS `servicesname`,`g`.`branch_name` AS `branch_name`,`b`.`washDate` AS `washDate`,`b`.`washTime` AS `washTime`,`a`.`updated_at` AS `postingdate`,`a`.`status` AS `status` from (((((((`pendingforpayment_tmp` `x` left join `srdsales` `a` on((`x`.`salesid` = `a`.`salesid`))) left join `booking` `b` on((`a`.`bookingid` = `b`.`id`))) left join `bookingpriority` `c` on((`a`.`bpid` = `c`.`pid`))) left join `classification_services` `d` on((`b`.`classid` = `d`.`id`))) left join `srdservices` `e` on((`b`.`servicesid` = `e`.`sid`))) left join `status` `f` on((`b`.`bookingstatus` = `f`.`statusid`))) left join `srdbranch` `g` on((`b`.`branchcode` = `g`.`id`))) where (`a`.`status` like '%Pending for Payment%')
+
+foreach($request->bookingid as $bookingiditem){
+                    Booking::where('id',$bookingiditem)->update([
+                        'status' => 4, //completed
+                    ]);
+
+                    BookingPriority::where('bookingId',$bookingiditem)->update([
+                        'status' => 4,//completed
+                    ]);
+                }
+		
+		
+		
+		
+---------------------------------		
+Admin - Earl Joel P Balendres / earlbalendres@gmail.com / 09261711011
+Cashier - Krisha Nicole Q Comeros / krishanicolecomeros@gmail.com /09510751508
+Automotive Detailer - Tomas G Villanueva III / thomasvillanueva111@gmail.com /09150498872		
+---------------
+
+client side
+
+	* book a services 
+		- it should give a notofication the reservation booking number via text
+		
+
+Cashier
+	* view the new reserve services
+		- create priority number (pn pattern - date+counter; ) the counter will change if the date will change also
+		
+
+Detailer
+	* view then accept the booking order and set the max time to finished the job 
+		- it should notify the client booking has started and will finish in max time set by the detailer
+		- status should be on going
+		- after the job has done the detail can view the priority order number and click Done button
+		- the status will change into completed and notify the cashier that the job is done
+		
+Cashier
+	* view Pending for payment menu
+		1. he/she can check all/check the client booking number to proceed to payment
+		2. he/she only need to input the any amount given by the client, the system will compute automatically
+		3. avoid refreshing the page or else it will duplicate the value but no worry it will save into temp table,
+			just click cancel and back to step 1
 	
 		
 	

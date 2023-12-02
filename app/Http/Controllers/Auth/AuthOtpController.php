@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
+use Twilio\Rest\Client;
+use Twilio\Jwt\ClientToken;
+
 use App\Models\User;
 use App\Models\UserOtp;
 
@@ -21,11 +25,22 @@ class AuthOtpController extends Controller
         $request->validate([
             'mobile_no' => 'required|exists:users,mobile_no'
         ]);
-
+        $receiverNumber = $request->mobile_no;
+        //$checknum = User::where('mobile_no',$request->mobile_no)->where('saStatus',1)->select('id')->count();
+        //if($checknum == 0){
+            //return redirect()->route('otp.login')->with('error', 'Not an admin!'); // redirect to other user like tech or cashier
+       // }
         /* Generate An OTP */
-        $userOtp = $this->generateOtp($request->mobile_no);
+        $userOtp = $this->generateOtp($receiverNumber);
 
-        $userOtp->sendSMS($request->mobile_no);
+        //dd($userOtp);
+        //$accountSid = config('app.twilio')['TWILIO_ACCOUNT_SID'];
+        //$authToken  = config('app.twilio')['TWILIO_AUTH_TOKEN'];
+       //$twilio_number = config('app.twilio')['TWILIO_FROM'];
+        //$client = new Client($accountSid, $authToken);
+
+
+        $userOtp->sendSMS($receiverNumber);
 
         return redirect()->route('otp.verification', ['user_id' => $userOtp->user_id])
                          ->with('success',  "OTP has been sent on Your Mobile Number.");
@@ -78,18 +93,37 @@ class AuthOtpController extends Controller
         }
 
         $user = User::whereId($request->user_id)->first();
-        dd($request->user_id);
-        if($user){
+        if($user->saStatus == 1){
+            if($user->saStatus == 1){
+                User::where('id',$request->user_id)->update([
+                    'islogin' =>  1,
 
-            $userOtp->update([
-                'expire_at' => now()
-            ]);
+                ]);
+                if($user){
 
-            Auth::login($user);
+                    $userOtp->update([
+                        'expire_at' => now()
+                    ]);
 
-            return redirect('/home');
+                    Auth::login($user);
+
+                    return redirect('/home');
+                }
+            }else{
+                if($user->loginattemp > 3){
+                    User::where('id',$request->user_id)->update([
+                        'acountlock' =>  1,
+
+                    ]);
+                }
+                User::where('id',$request->user_id)->update([
+                    'loginattemp' => $user->loginattemp + 1,
+
+                ]);
+
+            }
+            return redirect()->route('otp.login')->with('error', 'Your Otp is not correct');
         }
-
-        return redirect()->route('otp.login')->with('error', 'Your Otp is not correct');
+        return redirect()->route('otp.login')->with('error', 'Not allowed number!');
     }
 }

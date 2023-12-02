@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('cpassword');
             $table->string('gender');
             $table->string('mobile_no')->nullable()->nullable();
-            $table->string('secquestion',250)->unique();
-            $table->string('answer')->unique();
+            $table->string('secquestion',250);
+            $table->string('answer');
             $table->string('status');
             $table->integer('saStatus')->comment('This is the user status 0 for inactive and 1 for active')->nullable(false);
             $table->integer('islogin')->comment('The same as status');

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Classification;
+use App\Models\Employee;
 use App\Models\Services;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -32,7 +34,11 @@ class AdminController extends Controller
     }
 
     function Error4(){
-        return redirect()->back()->withErrors(['error_msg' => 'Ooops!.. Something went wrong. Data id is already in use!']);
+        return redirect()->back()->withErrors(['error_msg' => 'Oops! Something went wrong. The data is already in use.']);
+    }
+
+    function Error5(){
+        return redirect()->back()->withErrors(['error_msg' => 'Oops! User not found.']);
     }
 
     public function showIndex(){
@@ -86,16 +92,15 @@ class AdminController extends Controller
        return $this->Error2();
     }
 
-    public function dropClassification(Request $request){
-        $valdata = Validator::make($request->all(),[
-            'rowid' => 'required',
-       ]);
-       if($valdata->fails()){
-            return $this->Fails();
-       }
-       $ids = $request->rowid;
-       Classification::where('id',$ids)->delete();
-       return $this->Error3();
+    public function dropClassification($cid){
+
+        $checkservices = Services::where('classification',$cid)->count();
+        if($checkservices == 0){
+            Classification::where('id',$cid)->delete();
+            return $this->Error3();
+        }
+        return $this->Error4();
+
     }
 
     public function storeServices()
@@ -163,23 +168,22 @@ class AdminController extends Controller
        return $this->Error2();
     }
 
-    public function dropservices(Request $request){
-        $valdata = Validator::make($request->all(),[
-            'rowid' => 'required',
-       ]);
-       if($valdata->fails()){
-            return $this->Fails();
-       }
-       $ids = $request->rowid;
+    public function dropservices($sid){
 
-       Services::where('sid',$ids)->delete();
-       return $this->Error3();
+        $checkbooking = Booking::where('classid',$sid)->count();
+
+        if($checkbooking == 0){
+            Services::where('sid',$sid)->delete();
+            return $this->Error3();
+        }
+        return $this->Error4();
+
+
     }
 
-
     public function ShowEmployees(){
-            $getUsers = User::where('saStatus',0)
-                        ->select('name','email','gender','mobile_no','status','loginattemp')->get();
+
+            $getUsers = User::select('id','name','email','gender','mobile_no','status','loginattemp','password','cpassword','secquestion','answer')->get();
 
             return view('adminPanel.employee')->with('usersdetails',$getUsers);
     }
@@ -190,20 +194,26 @@ class AdminController extends Controller
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
-            'password_confirmation' => 'required',
             'gender' => 'required',
             'mobile_no' => 'required',
             'secquestion' => 'required',
             'seckey' => 'required',
        ]);
+
        if($valdata->fails()){
             return $this->Fails();
        }
 
+       $check = DB::table('users')->select('id')->count();
+
+       if(empty($check==0)){
+            $saStatus = $check + 1;
+       }
+       $saStatus = $check + 1;
+
        $fullname = $request->name;
        $email = $request->email;
        $password = $request->password;
-       $password_confirmation = $request->password_confirmation;
        $mobile_no = $request->mobile_no;
        $gender = $request->gender;
        $secquestion = $request->secquestion;
@@ -214,16 +224,66 @@ class AdminController extends Controller
        $insertData->email = $email;
        $insertData->email_verified_at = now();
        $insertData->password = Hash::make($password);
-       $insertData->cpassword = Hash::make($password_confirmation);
+       $insertData->cpassword = Hash::make($password);
        $insertData->gender = $gender;
        $insertData->mobile_no = $mobile_no;
        $insertData->secquestion = $secquestion;
        $insertData->answer = $seckey;
-       $insertData->saStatus = 0;
+       $insertData->status = 'Active';
+       $insertData->saStatus = $saStatus;
        $insertData->islogin = 0;
        $insertData->loginattemp = 0;
        $insertData->acountlock = 0;
        $insertData->save();
        return $this->Error1();
+    }
+
+    public function updateEmployee(Request $request){
+
+        $user = User::find($request->rid);
+        if (!$user) {
+            return $this->Error5();
+        }
+        $checkdata = Validator::make($request->all(),[
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $request->rid,
+            'mobile_no' => 'required',
+            'gender' => 'required',
+            'status' => 'required',
+            'secquestion' => 'required',
+            'seckey' => 'required',
+            'rid' => 'required',
+           ]);
+        if($checkdata->fails()){
+            return $this->Fails();
+        }
+
+        $fname = $request->name;
+        $email = $request->email;
+        $password = $request->password;
+        $mobile_no = $request->mobile_no;
+        $gender = $request->gender;
+        $secquestion = $request->secquestion;
+        $seckey = $request->seckey;
+        $rowid = $request->rid;
+        $status = $request->status;
+
+        User::where('id',$rowid)->update([
+            'name' => $fname,
+            'email' => $email,
+            'email_verified_at' => $email,
+            'password' => Hash::make($password),
+            'cpassword' => Hash::make($password),
+            'mobile_no' => $mobile_no,
+            'gender' => $gender,
+            'status' => $status,
+            'secquestion' => $secquestion,
+            'answer' => $seckey,
+        ]);
+        return $this->Error2();
+    }
+
+    public function dropEmployee($eid){
+        return $eid;
     }
 }

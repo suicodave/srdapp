@@ -30,6 +30,14 @@
             .footer {
                 text-align: center;
             }
+            .booking-date-picker {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 16px;
+  width: 200px;
+}
         </style>
         <!-- Template Stylesheet -->
         <link href="{{ asset('css/style.css')}}" rel="stylesheet">
@@ -173,7 +181,8 @@
 
                                 <div class="form-group pl-4 pr-4 pb-4">
                                     <label class="col-form-label" for="pdate">Preferred Date&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
-                                    <input type="date" class="form-control" name="pdate" style="width: 150px;" required autocomplete="pdate">
+                                    <input type="date" id="bookingDate" name="pdate"  class="form-control booking-date-picker" style="width: 150px;" required autocomplete="pdate">
+
                                     {{ $errors->first('pdate') }}
                                 </div>
                                 <div class="form-group pl-4 pr-4 pb-4">
@@ -196,6 +205,17 @@
                         </div>
                     </div>
                 </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                    const today = new Date();
+                    const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+                    const bookingDate = document.getElementById("bookingDate");
+
+                    // Set minimum selectable date to the first day of the current month
+                    bookingDate.min = currentMonthStart.toISOString().split('T')[0];
+                  });
+
+                  </script>
                 <div class="modal-footer">
                     <input type="hidden" name="rid" id="cid">
                     <input type="hidden" name="sid" id="csid">

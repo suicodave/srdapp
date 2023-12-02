@@ -1,7 +1,6 @@
 @extends('layouts')
 @section('content')
 
-
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <div class="container-fluid pt-5">
@@ -23,15 +22,32 @@
 
         <!-- Login Form -->
         <form method="POST" action="{{ route('login') }}">
-        <input type="text"  id="email" class="fadeIn second @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
+        <input type="text"  id="email" class="fadeIn second @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="false" autofocus placeholder="Email">
             @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
 
-        <input type="text" id="password" placeholder="Password" class="fadeIn third @error('password') is-invalid @enderror" name="password"  required autocomplete="current-password">
+        <input type="text" id="password" placeholder="Password" style="border: 1px solid transparent;" class="fadeIn third @error('password') is-invalid @enderror" name="password"  required autocomplete="current-password">
+        <script>
+            var input = document.getElementById("password");
 
+        input.addEventListener("input", function() {
+            var currentType = input.type;
+
+            // If the input field has text and the current type is 'text', switch to 'password'
+            if (input.value && currentType === "text") {
+                input.type = "password";
+            }
+
+            // If the input field is empty and the current type is 'password', switch to 'text'
+            if (!input.value && currentType === "password") {
+                input.type = "text";
+            }
+        });
+
+        </script>
         @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
