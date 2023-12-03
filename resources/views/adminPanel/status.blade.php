@@ -14,29 +14,13 @@
     <div class="page-content">
         <div class="row">
             <div class="col-xs-12">
-
+                <div class="card-header">
+                    <a href="#" title="Add" style="float: right;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">Add Status</a>
+                </div>
                 <div class="row">
-
                     <div class="col-xs-12">
-                        <h3 class="header smaller lighter blue">Route Name</h3>
-
-                        <div class="clearfix">
-
-                            <div class="pull-right tableTools-container"></div>
-
-                        </div>
-                        <div class="table-header">
-                            <div class="card-header">
-                                <a href="#" title="Add" style="float: right;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">Add Status</a>
-                            </div>
-                        </div>
-
-                        <!-- div.table-responsive -->
-
-                        <!-- div.dataTables_borderWrap -->
-
                         <div>
-                            <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <table id="example2" class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th class="center"></th>

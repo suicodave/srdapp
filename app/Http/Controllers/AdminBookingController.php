@@ -31,10 +31,10 @@ class AdminBookingController extends Controller
     }
 
     function Error4(){
-        return redirect()->back()->withErrors(['error_msg' => 'Oops! Something went wrong. The data is already in use.']);
+        return redirect()->back()->withErrors(['error_msg4' => 'Oops! Something went wrong. The data is already in use.']);
     }
     function Error6(){
-        return redirect()->back()->withErrors(['error_msg' => 'Oops! Something went wrong. Duplicate entry!.']);
+        return redirect()->back()->withErrors(['error_msg5' => 'Oops! Something went wrong. Duplicate entry!.']);
     }
     public function viewbooking(){
         $getbooking = DB::table('booking')

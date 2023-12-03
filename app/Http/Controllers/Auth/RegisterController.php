@@ -112,6 +112,7 @@ class RegisterController extends Controller
             'mobile_no' => $mobile_no,
             'secquestion' => $secquestion,
             'answer' => $answer,
+            'status' => 'SysAdmin',
             'saStatus' => $status,
             'islogin' => 0,
             'loginattemp' => 0,

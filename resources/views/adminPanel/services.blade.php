@@ -1,6 +1,7 @@
 @extends('adminPanel.adminpanel-layout')
 
 @section('content')
+
 <div class="main-content-inner">
     <div class="breadcrumbs ace-save-state" id="breadcrumbs">
         <ul class="breadcrumb">
@@ -10,14 +11,16 @@
             </li>
         </ul>
     </div>
+
     <div class="page-content">
         <div class="row">
+            <div class="card-header">
+                <a href="#" title="Add" style="float: right;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">Add Services</a>
+            </div>
             <div class="col-xs-12">
-                <div class="card-header">
-                    <a href="#" title="Add" style="float: right;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">Add Services</a>
-                </div>
+
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped" style="font-size: 14px;">
+                    <table id="example2" class="table table-bordered table-striped" style="font-size: 14px;">
                         <thead>
                             <tr>
                                 <th>#</th>

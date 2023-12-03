@@ -11,12 +11,13 @@
         </ul>
     </div>
     <div class="page-content">
+        <div class="card-header">
+            <a href="#" title="Add" style="float: right;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">Add Branches</a>
+        </div>
         <div class="row">
             <div class="col-xs-12">
-                <div class="card-header">
-                    <a href="#" title="Add" style="float: right;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">Add Branches</a>
-                </div>
-                <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+
+                <table id="example2" class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="center">

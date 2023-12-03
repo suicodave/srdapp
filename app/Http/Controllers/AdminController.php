@@ -18,7 +18,7 @@ use function Ramsey\Uuid\v1;
 class AdminController extends Controller
 {
     function Fails(){
-        return redirect()->back()->withErrors(['error_msg' => 'Something went wrong. Please check you inputted data!']);
+        return redirect()->back()->withErrors(['error' => 'Something went wrong. Please check you inputted data!']);
     }
 
     function Error1(){
