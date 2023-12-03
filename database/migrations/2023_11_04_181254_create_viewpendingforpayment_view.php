@@ -37,6 +37,6 @@ class CreateViewpendingforpaymentView extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('viewpendingforpayment_view');
+        Schema::dropIfExists('viewpendingforpayment');
     }
 }

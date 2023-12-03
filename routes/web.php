@@ -22,6 +22,7 @@ Route::post('/CreateBooking',[App\Http\Controllers\BookingController::class,'boo
 
 
 Auth::routes();
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/status',[App\Http\Controllers\StatusController::class,'showStatus'])->name('getStatus');
