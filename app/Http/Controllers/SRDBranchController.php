@@ -84,12 +84,21 @@ class SRDBranchController extends Controller
         return $this->Error2();
     }
 
-    public function dropBranches($cid){
-        $checkifexist = Booking::where('branchcode',$cid)->select()->count();
+    public function dropBranches(Request $request){
+        $checkid = Validator::make($request->all(),[
+            'rowid' => 'required'
+        ]);
+        if($checkid->fails()){
+            return $this->Fails();
+        }
+
+        $branchid = $request->rowid;
+
+        $checkifexist = Booking::where('branchcode',$branchid)->select()->count();
         if ($checkifexist > 0 ) {
             return $this->Error5();
             }else{
-            $deletebranch = SRDBranch::find($cid);
+            $deletebranch = SRDBranch::find($branchid);
             $deletebranch->delete();
             return $this->Error3();
             }

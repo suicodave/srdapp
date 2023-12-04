@@ -103,12 +103,21 @@ class SalaryGradeController extends Controller
         return $this->Error2();
     }
 
-    public function dropSalaries($cid){
-        $deletebranch = SalaryGrade::find($cid);
-        if (!$deletebranch) {
-            return $this->Error5();
+    public function dropSalaries(Request $request){
+        $checkid = Validator::make($request->all(),[
+            'rowid' => 'required'
+        ]);
+        if($checkid->fails()){
+            return $this->Fails();
         }
-        $deletebranch->delete();
-        return $this->Error3();
+
+        $salid = $request->rowid;
+        $checkua = UserAccount::where('salarygrade',$salid)->count();
+        if ($checkua > 0) {
+            return $this->Error4();
+            }else{
+                SalaryGrade::where('sgid',$salid)->delete();
+                return $this->Error3();
+            }
     }
 }

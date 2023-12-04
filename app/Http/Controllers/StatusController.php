@@ -81,7 +81,15 @@ class StatusController extends Controller
 
     }
 
-    public function dropStatus($statusid){
+    public function dropStatus(Request $request){
+        $checkid = Validator::make($request->all(),[
+            'rowid' => 'required'
+        ]);
+        if($checkid->fails()){
+            return $this->Fails();
+        }
+
+        $statusid = $request->rowid;
 
                 $checkpid = BookingPriority::where('pid',$statusid)->select('pid')->count();
                 $checkbid = Booking::where('bookingstatus',$statusid)->select('id')->count();

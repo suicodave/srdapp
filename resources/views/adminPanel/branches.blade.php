@@ -40,8 +40,9 @@
                                     data-branch_name="{{$itemclass->branch_name}}"
                                     data-status="{{$itemclass->status}}"
                                     class="text-danger passingID btn btn-xs btn-info" data-toggle="modal" data-target="#MyModal" title="Edit">
-                                    <i class="ace-icon fa fa-pencil bigger-120"></i></a> | <a class="btn btn-xs btn-danger" href="{{route('deleteBranches',['cid' => $itemclass->id])}}">
-                                        <i class="ace-icon fa fa-trash-o bigger-120"></i></td>
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i></a> |
+                                    <button class="btn btn-xs btn-danger dpassingID" data-did="{{$itemclass->id}}" onclick="openModal('exampleID')"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
+                                    </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -140,5 +141,42 @@
     </script>
     <!--end update-->
 
+<!--delete-->
+<form action="{{route('deleteBranches')}}" method="POST">
+    <div id="deleteModal" class="modald">
+        <div class="modald-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Delete Branch</h4>
+                <button type="button" class="closed" onclick="closeModal()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete the data?
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="rowid" id="statid">
+                <button type="button" class="btn btn-default btn-sm" onclick="closeModal()" data-dismiss="modal">Cancel</button>
+                <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+            </div>
+        </div>
+    </div>
+    @csrf
+    </form>
+    <script type="text/javascript">
+    var modal = document.getElementById("deleteModal");
+    $(".dpassingID").click(function () {
+            var did = $(this).attr('data-did');
 
+            $("#statid").val( did );
+            $('#myModal').modal('show');
+
+        });
+    // Function to open the modal
+    function openModal() {
+      modal.style.display = "block";
+    }
+    function closeModal() {
+      modal.style.display = "none";
+    }
+    </script>
+    <!--end delete-->
 @endsection

@@ -7,6 +7,7 @@ use App\Models\Classification;
 use App\Models\Employee;
 use App\Models\Services;
 use App\Models\User;
+use App\Models\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -92,15 +93,23 @@ class AdminController extends Controller
        return $this->Error2();
     }
 
-    public function dropClassification($cid){
-
-        $checkservices = Services::where('classification',$cid)->count();
-        if($checkservices == 0){
-            Classification::where('id',$cid)->delete();
-            return $this->Error3();
+    public function dropClassification(Request $request){
+        $checkid = Validator::make($request->all(),[
+            'rowid' => 'required'
+        ]);
+        if($checkid->fails()){
+            return $this->Fails();
         }
-        return $this->Error4();
 
+        $servicesid = $request->rowid;
+
+        $checkservices = Services::where('classification',$servicesid)->count();
+        if ($checkservices > 0) {
+        return $this->Error4();
+        }else{
+        Classification::where('id',$servicesid)->delete();
+        return $this->Error3();
+        }
     }
 
     public function storeServices()
@@ -168,17 +177,22 @@ class AdminController extends Controller
        return $this->Error2();
     }
 
-    public function dropservices($sid){
-
-        $checkbooking = Booking::where('classid',$sid)->count();
-
-        if($checkbooking == 0){
-            Services::where('sid',$sid)->delete();
-            return $this->Error3();
+    public function dropservices(Request $request){
+        $checkid = Validator::make($request->all(),[
+            'rowid' => 'required'
+        ]);
+        if($checkid->fails()){
+            return $this->Fails();
         }
+        $sid = $request->rowid;
+
+        $checkbooking = Booking::where('servicesid',$sid)->count();
+        if ($checkbooking >0) {
         return $this->Error4();
-
-
+        }else{
+        Services::where('sid',$sid)->delete();
+        return $this->Error3();
+        }
     }
 
     public function ShowEmployees(){
@@ -283,7 +297,22 @@ class AdminController extends Controller
         return $this->Error2();
     }
 
-    public function dropEmployee($eid){
-        return $eid;
+    public function dropEmployee(Request $request){
+        $checkid = Validator::make($request->all(),[
+            'rowid' => 'required'
+        ]);
+        if($checkid->fails()){
+            return $this->Fails();
+        }
+
+        $empid = $request->rowid;
+        $checkua = UserAccount::where('employeeid',$empid)->count();
+        $checkbook = Booking::where('employeeid',$empid)->count();
+        if ($checkua > 0 || $checkbook > 0) {
+            return $this->Error4();
+            }else{
+            User::where('id',$empid)->delete();
+            return $this->Error3();
+            }
     }
 }

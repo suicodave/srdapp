@@ -110,14 +110,13 @@ h1 {
 .flash-message {
     display: none;
     position: fixed;
-    top: 50%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 15px;
-    background-color: red; /* Change this to your desired background color */
-    color: white; /* Change this to your desired text color */
-    border-radius: 5px;
-    animation: flash 2s ease-in-out; /* Adjust the duration as needed */
+    padding: 15px; /* Change this to your desired background color */
+    color: rgb(13, 13, 13); /* Change this to your desired text color */
+    border-rgb(13, 6, 6)s: 5px;
+    animation: flash 1s ease-in-out; /* Adjust the duration as needed */
 }
 
 /* Keyframes for the flashing animation */
@@ -126,6 +125,31 @@ h1 {
     50% { opacity: 0; }
 }
 
+
+/* Modal Styles */
+.modald {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+}
+
+.modald-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+}
+
+.closed {
+  float: right;
+  cursor: pointer;
+}
 </style>
 <body class="no-skin">
     <div id="navbar" class="navbar navbar-default          ace-save-state">
@@ -317,14 +341,14 @@ h1 {
                         <a href="{{route('Classification')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
 
-                            Type of Services
+                            Type of Vehicle
                         </a>
                     </li>
 
                     <li class="">
                         <a href="{{route('Services')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            Services
+                            Type of Services
                         </a>
                     </li>
                 </ul>
@@ -555,14 +579,25 @@ h1 {
         </div>
 
         <div class="main-content"><!-- /main content here -->
+
             @yield('content')
             @if($errors->any())
-                <div class="flash-message">
-                        @foreach ($errors->all() as $error)
-                            <p>{{ $error }}</p>
-                        @endforeach
-                </div>
-            @endif
+            @error('error_msg')
+            <div class="flash-message alert alert-warning">{{ $message }}</div>
+            @enderror
+
+            @error('save_msg')
+            <div class="flash-message alert alert-success">{{ $message }}</div>
+            @enderror
+
+            @error('updated_msg')
+            <div class="flash-message alert alert-info">{{ $message }}</div>
+            @enderror
+
+            @error('delete_msg')
+            <div class="flash-message alert alert-danger">{{ $message }}</div>
+            @enderror
+        @endif
         </div><!-- /.main-content -->
 
         <div class="footer">

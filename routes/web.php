@@ -28,45 +28,45 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/status',[App\Http\Controllers\StatusController::class,'showStatus'])->name('getStatus');
 Route::post('/addstatus',[App\Http\Controllers\StatusController::class,'postStatus'])->name('addStatus');
 Route::post('/editstatus',[App\Http\Controllers\StatusController::class,'editStatus'])->name('updateStatus');
-Route::get('/deletestatus/{statusid}',[App\Http\Controllers\StatusController::class,'dropStatus'])->name('deleteStatus');
+Route::post('/deletestatus',[App\Http\Controllers\StatusController::class,'dropStatus'])->name('deleteStatus');
 
 Route::get('/branches',[App\Http\Controllers\SRDBranchController::class,'showBranches'])->name('getbranches');
 Route::post('/addbranch',[App\Http\Controllers\SRDBranchController::class,'postBranches'])->name('addBranches');
 Route::post('/editbranch',[App\Http\Controllers\SRDBranchController::class,'editBranches'])->name('updateBranches');
-Route::get('/deletebranch/{cid}',[App\Http\Controllers\SRDBranchController::class,'dropBranches'])->name('deleteBranches');
+Route::post('/deletebranch',[App\Http\Controllers\SRDBranchController::class,'dropBranches'])->name('deleteBranches');
 
 Route::get('designation',[App\Http\Controllers\DesignationController::class,'showDesignation'])->name('getdesignation');
 Route::post('adddesignation',[App\Http\Controllers\DesignationController::class,'postDesignation'])->name('addDesignations');
 Route::post('editdesignation',[App\Http\Controllers\DesignationController::class,'editDesigantions'])->name('updateDesignations');
-Route::get('deletedesignation/{cid}',[App\Http\Controllers\DesignationController::class,'dropDesignation'])->name('deleteDesignations');
+Route::post('deletedesignation',[App\Http\Controllers\DesignationController::class,'dropDesignation'])->name('deleteDesignations');
 
 Route::get('salary',[App\Http\Controllers\SalaryGradeController::class,'showSalaries'])->name('getSalaries');
 Route::post('addsalary',[App\Http\Controllers\SalaryGradeController::class,'addSalaries'])->name('addSalary');
 Route::post('updatesalary',[App\Http\Controllers\SalaryGradeController::class,'editSalaries'])->name('updateSalary');
-Route::get('deletesalary/{cid}',[App\Http\Controllers\SalaryGradeController::class,'dropSalaries'])->name('deleteSalary');
+Route::post('deletesalary/',[App\Http\Controllers\SalaryGradeController::class,'dropSalaries'])->name('deleteSalary');
 
 Route::get('useraccount',[App\Http\Controllers\UserAccountController::class,'showUserAccounts'])->name('addUserAccounts');
 Route::post('adduseraccount',[App\Http\Controllers\UserAccountController::class,'addUserAccounts'])->name('addUserAccount');
 Route::post('edituseraccount',[App\Http\Controllers\UserAccountController::class,'editUserAccounts'])->name('updateUserAccount');
-Route::get('deleteuseraccount/{cid}',[App\Http\Controllers\UserAccountController::class,'deleteUserAccounts'])->name('deleteUserAccount');
+Route::post('deleteuseraccount',[App\Http\Controllers\UserAccountController::class,'deleteUserAccounts'])->name('deleteUserAccount');
 
 
 Route::get('/classification',[App\Http\Controllers\AdminController::class, 'storeServicesClass'])->name('Classification');
 Route::post('/storelassification',[App\Http\Controllers\AdminController::class,'postClassification'])->name('addClassification');
 Route::post('/updateclassification',[App\Http\Controllers\AdminController::class,'editClassification'])->name('updateClassification');
-Route::get('/deleteclassification/{cid}',[App\Http\Controllers\AdminController::class,'dropClassification'])->name('deleteClassification');
+Route::post('/deleteclassification',[App\Http\Controllers\AdminController::class,'dropClassification'])->name('deleteClassification');
 
 Route::get('/services',[App\Http\Controllers\AdminController::class, 'storeServices'])->name('Services');
 Route::post('/addservices',[App\Http\Controllers\AdminController::class,'postServices'])->name('addServices');
 Route::post('/editservices',[App\Http\Controllers\AdminController::class,'servicesUpdate'])->name('updateServices');
-Route::get('/deleteservices/{sid}',[App\Http\Controllers\AdminController::class,'dropservices'])->name('deleteservices');
+Route::post('/deleteservices',[App\Http\Controllers\AdminController::class,'dropservices'])->name('deleteservices');
 
 
 Route::get('/showemployee',[App\Http\Controllers\AdminController::class,'ShowEmployees'])->name('addEmployee');
 Route::post('/store-mployee',[App\Http\Controllers\AdminController::class,'createEmployee'])->name('storeEmployee');
 Route::post('/edit-employee',[App\Http\Controllers\AdminController::class,'updateEmployee'])->name('editEmployee');
 
-Route::get('/deleteemploye/{eid}',[App\Http\Controllers\AdminController::class,'dropEmployee'])->name('deleteEmployee');
+Route::post('/deleteemploye',[App\Http\Controllers\AdminController::class,'dropEmployee'])->name('deleteEmployee');
 
 Route::get('/ShowBooking',[App\Http\Controllers\AdminBookingController::class,'viewbooking'])->name('showbooking');
 Route::get('/viewBooking/{bid}',[App\Http\Controllers\AdminBookingController::class,'showbookingdetails'])->name('viewbookingdetails');

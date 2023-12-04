@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Designation;
+use App\Models\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -78,13 +79,22 @@ class DesignationController extends Controller
         return $this->Error2();
     }
 
-    public function dropDesignation($cid){
-        $deletedesignation = Designation::find($cid);
-        if (!$deletedesignation) {
-            return $this->Error5();
+    public function dropDesignation(Request $request){
+        $checkid = Validator::make($request->all(),[
+            'rowid' => 'required'
+        ]);
+        if($checkid->fails()){
+            return $this->Fails();
         }
-        $deletedesignation->delete();
-        return $this->Error3();
-    }
 
+        $designid = $request->rowid;
+
+        $checkua = UserAccount::where('designationid',$designid)->count();
+        if ($checkua > 0 ) {
+        return $this->Error4();
+        }else{
+        Designation::where('id',$designid)->delete();
+        return $this->Error3();
+        }
+    }
 }

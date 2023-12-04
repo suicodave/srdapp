@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Designation;
 use App\Models\Employee;
 use App\Models\SalaryGrade;
@@ -197,10 +198,22 @@ class UserAccountController extends Controller
 
     }
 
-    public function deleteUserAccounts($cid){
+    public function deleteUserAccounts(Request $request){
+        $checkid = Validator::make($request->all(),[
+            'rowid' => 'required'
+        ]);
+        if($checkid->fails()){
+            return $this->Fails();
+        }
 
-       UserAccount::where('id',$cid)->delete();
-       return redirect()->back()->withErrors(['error_msg' => 'Successfully deleted!']);
+        $uid = $request->rowid;
 
+        $checkbook = Booking::where('employeeid',$uid)->count();
+        if(!empty($checkbook) > 0){
+            return $this->Error4();
+            }else{
+                UserAccount::where('id',$uid)->delete();
+                return $this->Error3();
+            }
     }
 }
