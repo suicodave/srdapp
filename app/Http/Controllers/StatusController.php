@@ -85,6 +85,7 @@ class StatusController extends Controller
         $checkid = Validator::make($request->all(),[
             'rowid' => 'required'
         ]);
+
         if($checkid->fails()){
             return $this->Fails();
         }
@@ -96,12 +97,8 @@ class StatusController extends Controller
                 if ($checkpid >0 && $checkbid>0) {
                 return $this->Error4();
                 }else{
-                    try{
-                        Status::where('statusid',$statusid)->delete();
-                        return $this->Error3();
-                        }catch(\Exception $e){
-                        return response()->json(['error'=>false,'message'=>$e->getMessage()],405);
-                        }
+                    Status::where('statusid',$statusid)->delete();
+                    return $this->Error3();
                 }
     }
 }
