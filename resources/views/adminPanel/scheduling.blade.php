@@ -18,7 +18,6 @@
                         <div class="col-sm-12">
                             <div class="space"></div>
 
-                            <div id="calendar"></div>
                         </div>
                     </div>
 

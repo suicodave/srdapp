@@ -463,7 +463,7 @@ h1 {
 
                 <ul class="submenu">
                     <li class="">
-                        <a href="{{route('scheduling')}}">
+                        <a href="">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Scheduling
                         </a>
