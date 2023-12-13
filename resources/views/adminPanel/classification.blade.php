@@ -36,9 +36,9 @@
                             <td>{{$itemclass->vehicletype }}</td>
                             <td>
                                 @if($itemclass->status == 1)
-                                {{"Available";}}
+                                    {{"Available"}}
                                 @else
-                                    {{"Unavailable";}}
+                                    {{"Unavailable"}}
                                 @endif
                             </td>
                             <td style="text-align: center;"><a data-toggle="modal"

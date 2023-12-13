@@ -31,8 +31,6 @@
                 }else{
                     $counter =  0 + 1;
                 }
-
-
                 ?>
 
                 <div class="widget-toolbar no-border invoice-info">

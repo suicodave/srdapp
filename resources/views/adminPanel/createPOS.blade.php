@@ -49,7 +49,7 @@
 
                                         <br />
                                         <span class="invoice-info-label">Date:</span>
-                                        <span class="blue">04/04/2014</span>
+                                        <span class="blue">{{date(now());}}</span>
                                     </div>
 
                                     <div class="widget-toolbar hidden-480">

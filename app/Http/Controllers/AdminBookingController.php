@@ -180,6 +180,7 @@ class AdminBookingController extends Controller
                                 ->leftJoin('classification_services','classification_services.id','booking.classid')
                                 ->leftJoin('srdservices','srdservices.sid','booking.servicesid')
                                 ->select('booking.id','booking.bookingnumber','booking.fullName','classification_services.vehicletype as classid','booking.mobileNumber','srdservices.servicesname as servicesid','srdservices.price','booking.branchcode','booking.washDate','booking.washTime','booking.message','booking.bookingstatus','booking.created_at','booking.email')->get();
+    return view('adminPanel.scheduling');
     }
 
 

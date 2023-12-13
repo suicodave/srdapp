@@ -12,6 +12,9 @@ class ViewDataController extends Controller
     }
 
     public function viewBookings(){
-        return view('adminPanel.viewbooking');
+
+        $getstatus = DB::table('status')->select('statusid','statusname')->get();
+        $getvehicletype = DB::table('classification_services')->select('id','vehicletype')->get();
+        return view('adminPanel.viewbooking')->with('status',$getstatus)->with('vehicletype',$getvehicletype);
     }
 }

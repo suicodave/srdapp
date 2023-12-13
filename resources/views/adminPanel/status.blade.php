@@ -44,7 +44,7 @@
                                                 data-description="{{$itemstatus->description}}"
                                                 class="btn btn-xs btn-info text-danger passingID" data-toggle="modal" data-target="#MyModal" title="Edit">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i></a> |
-                                            <button class="btn btn-xs btn-danger dpassingID" data-did="{{$itemstatus->statusid}}" onclick="openModal('exampleID')"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
+                                            <a class="btn btn-xs btn-danger dpassingID" data-did="{{$itemstatus->statusid}}" onclick="openModal('exampleID')"><i class="ace-icon fa fa-trash-o bigger-120"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

@@ -150,6 +150,40 @@ h1 {
   float: right;
   cursor: pointer;
 }
+
+.select-wrapper {
+  display: inline-block;
+}
+
+.inline-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 4px 40px 4px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 12px;
+  color: #333;
+}
+
+.inline-select:focus {
+  outline: none;
+}
+
+.inline-select option {
+  background-color: #fff;
+  color: #333;
+}
+.filter-button {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  font-size: 12px;
+  color: #333;
+  cursor: pointer;
+}
 </style>
 <body class="no-skin">
     <div id="navbar" class="navbar navbar-default          ace-save-state">

@@ -41,7 +41,13 @@
                                 <td>{{$value->branch_name }}</td>
                                 <td>{{$value->washDate }} - {{$value->washTime}}</td>
                                 <td>{{$value->created_at }}</td>
-                                <td style="text-align: center;">@if($value->txnNumber == NULL) {{'Not available yet!'}} @else TN#:{{$value->txnNumber }} @endif </td>
+                                <td style="text-align: center;">
+                                    @if($value->txnNumber == NULL)
+                                        {{'Not available yet!'}}
+                                    @else
+                                        {{" TN#:".$value->txnNumber }}
+                                    @endif
+                                </td>
                                 <td>{{$value->statusname}}</td>
                                 <td><a href="{{route('viewbookingdetails',['bid' => $value->id])}}">View</a></td>
                             </tr>
