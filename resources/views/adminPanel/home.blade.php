@@ -147,7 +147,6 @@
                                 </div><!-- /.widget-body -->
                             </div><!-- /.widget-box -->
                         </div><!-- /.col -->
-
                         <div class="col-md-6">
                             <div class="widget-box">
                                 <div class="widget-header widget-header-flat widget-header">

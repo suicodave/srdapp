@@ -16,9 +16,9 @@ use Twilio\TwiML\Video\Room;
 |
 */
 Route::get('/',[App\Http\Controllers\AdminController::class,'showIndex'])->name('index');
-Route::get('About Us',[App\Http\Controllers\AdminController::class,'showAbout'])->name('about');
-Route::get('Services',[App\Http\Controllers\AdminController::class,'showServices'])->name('services');
-Route::get('Schedule',[App\Http\Controllers\AdminController::class,'availableschedule'])->name('schedule');
+Route::get('/About Us',[App\Http\Controllers\AdminController::class,'showAbout'])->name('about');
+Route::get('/Services',[App\Http\Controllers\AdminController::class,'showServices'])->name('services');
+Route::get('/Schedule',[App\Http\Controllers\AdminController::class,'availableschedule'])->name('schedule');
 Route::post('/CreateBooking',[App\Http\Controllers\BookingController::class,'bookservices'])->name('bookednow');
 
 
@@ -36,20 +36,20 @@ Route::post('/addbranch',[App\Http\Controllers\SRDBranchController::class,'postB
 Route::post('/editbranch',[App\Http\Controllers\SRDBranchController::class,'editBranches'])->name('updateBranches');
 Route::post('/deletebranch',[App\Http\Controllers\SRDBranchController::class,'dropBranches'])->name('deleteBranches');
 
-Route::get('designation',[App\Http\Controllers\DesignationController::class,'showDesignation'])->name('getdesignation');
-Route::post('adddesignation',[App\Http\Controllers\DesignationController::class,'postDesignation'])->name('addDesignations');
-Route::post('editdesignation',[App\Http\Controllers\DesignationController::class,'editDesigantions'])->name('updateDesignations');
-Route::post('deletedesignation',[App\Http\Controllers\DesignationController::class,'dropDesignation'])->name('deleteDesignations');
+Route::get('/designation',[App\Http\Controllers\DesignationController::class,'showDesignation'])->name('getdesignation');
+Route::post('/adddesignation',[App\Http\Controllers\DesignationController::class,'postDesignation'])->name('addDesignations');
+Route::post('/editdesignation',[App\Http\Controllers\DesignationController::class,'editDesigantions'])->name('updateDesignations');
+Route::post('/deletedesignation',[App\Http\Controllers\DesignationController::class,'dropDesignation'])->name('deleteDesignations');
 
-Route::get('salary',[App\Http\Controllers\SalaryGradeController::class,'showSalaries'])->name('getSalaries');
-Route::post('addsalary',[App\Http\Controllers\SalaryGradeController::class,'addSalaries'])->name('addSalary');
-Route::post('updatesalary',[App\Http\Controllers\SalaryGradeController::class,'editSalaries'])->name('updateSalary');
-Route::post('deletesalary/',[App\Http\Controllers\SalaryGradeController::class,'dropSalaries'])->name('deleteSalary');
+Route::get('/salary',[App\Http\Controllers\SalaryGradeController::class,'showSalaries'])->name('getSalaries');
+Route::post('/addsalary',[App\Http\Controllers\SalaryGradeController::class,'addSalaries'])->name('addSalary');
+Route::post('/updatesalary',[App\Http\Controllers\SalaryGradeController::class,'editSalaries'])->name('updateSalary');
+Route::post('/deletesalary/',[App\Http\Controllers\SalaryGradeController::class,'dropSalaries'])->name('deleteSalary');
 
-Route::get('useraccount',[App\Http\Controllers\UserAccountController::class,'showUserAccounts'])->name('addUserAccounts');
-Route::post('adduseraccount',[App\Http\Controllers\UserAccountController::class,'addUserAccounts'])->name('addUserAccount');
-Route::post('edituseraccount',[App\Http\Controllers\UserAccountController::class,'editUserAccounts'])->name('updateUserAccount');
-Route::post('deleteuseraccount',[App\Http\Controllers\UserAccountController::class,'deleteUserAccounts'])->name('deleteUserAccount');
+Route::get('/useraccount',[App\Http\Controllers\UserAccountController::class,'showUserAccounts'])->name('addUserAccounts');
+Route::post('/adduseraccount',[App\Http\Controllers\UserAccountController::class,'addUserAccounts'])->name('addUserAccount');
+Route::post('/edituseraccount',[App\Http\Controllers\UserAccountController::class,'editUserAccounts'])->name('updateUserAccount');
+Route::post('/deleteuseraccount',[App\Http\Controllers\UserAccountController::class,'deleteUserAccounts'])->name('deleteUserAccount');
 
 
 Route::get('/classification',[App\Http\Controllers\AdminController::class, 'storeServicesClass'])->name('Classification');
