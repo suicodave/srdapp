@@ -24,8 +24,7 @@ Route::post('/CreateBooking',[App\Http\Controllers\BookingController::class,'boo
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/home',[App\Http\Controllers\HomeController::class,'index'])->name('home');
 Route::get('/status',[App\Http\Controllers\StatusController::class,'showStatus'])->name('getStatus');
 Route::post('/addstatus',[App\Http\Controllers\StatusController::class,'postStatus'])->name('addStatus');
 Route::post('/editstatus',[App\Http\Controllers\StatusController::class,'editStatus'])->name('updateStatus');
@@ -44,7 +43,7 @@ Route::post('/deletedesignation',[App\Http\Controllers\DesignationController::cl
 Route::get('/salary',[App\Http\Controllers\SalaryGradeController::class,'showSalaries'])->name('getSalaries');
 Route::post('/addsalary',[App\Http\Controllers\SalaryGradeController::class,'addSalaries'])->name('addSalary');
 Route::post('/updatesalary',[App\Http\Controllers\SalaryGradeController::class,'editSalaries'])->name('updateSalary');
-Route::post('/deletesalary/',[App\Http\Controllers\SalaryGradeController::class,'dropSalaries'])->name('deleteSalary');
+Route::post('/deletesalary',[App\Http\Controllers\SalaryGradeController::class,'dropSalaries'])->name('deleteSalary');
 
 Route::get('/useraccount',[App\Http\Controllers\UserAccountController::class,'showUserAccounts'])->name('addUserAccounts');
 Route::post('/adduseraccount',[App\Http\Controllers\UserAccountController::class,'addUserAccounts'])->name('addUserAccount');
