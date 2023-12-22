@@ -67,13 +67,13 @@ class AdminBookingController extends Controller
         ->leftJoin('bookingpriority','bookingpriority.bookingId','booking.id')
         ->leftJoin('status','status.statusid','booking.bookingstatus')
         ->leftJoin('srdbranch','srdbranch.id','booking.branchcode')
-        ->select('booking.id','booking.bookingnumber','srdbranch.branch_name','status.statusname','bookingpriority.pid','bookingpriority.prioritynumber','bookingpriority.dateprocess','booking.txnNumber','booking.fullName','classification_services.vehicletype as classid','booking.mobileNumber','srdservices.servicesname as servicesid','srdservices.price','booking.branchcode','booking.washDate','booking.washTime','booking.message','booking.bookingstatus','booking.created_at','booking.email')->get();
+        ->select('booking.id','booking.bookingnumber','booking.numbervehicle','srdbranch.branch_name','status.statusname','bookingpriority.pid','bookingpriority.prioritynumber','bookingpriority.dateprocess','booking.txnNumber','booking.fullName','classification_services.vehicletype as classid','booking.mobileNumber','srdservices.servicesname as servicesid','srdservices.price','booking.branchcode','booking.washDate','booking.washTime','booking.message','booking.bookingstatus','booking.created_at','booking.email')->get();
 
         return view('adminPanel.showclientbookingdetails')->with('bookings',$getbooking);
     }
 
     public function proceedclientbookings(Request $request){
-            dd($request->all());
+
             $checkdata = Validator::make($request->all(),[
                 'maxnumtime'=>'required|numeric',
                 'browid'=>'required|numeric',
@@ -135,7 +135,7 @@ class AdminBookingController extends Controller
         ->leftJoin('srdservices','srdservices.sid','booking.servicesid')
         ->leftJoin('srdbranch','srdbranch.id','booking.branchcode')
         ->leftJoin('status','status.statusid','booking.bookingstatus')
-        ->select('booking.id','booking.bookingnumber','status.statusname','booking.txnNumber','srdbranch.branch_name','booking.fullName','classification_services.vehicletype as classid','booking.mobileNumber','srdservices.servicesname as servicesid','srdservices.price','booking.branchcode','booking.washDate','booking.washTime','booking.message','booking.bookingstatus','booking.created_at','booking.email')->get();
+        ->select('booking.id','booking.bookingnumber','booking.numbervehicle','status.statusname','booking.txnNumber','srdbranch.branch_name','booking.fullName','classification_services.vehicletype as classid','booking.mobileNumber','srdservices.servicesname as servicesid','srdservices.price','booking.branchcode','booking.washDate','booking.washTime','booking.message','booking.bookingstatus','booking.created_at','booking.email')->get();
 
         return view('adminPanel.viewbookingdetails')->with('bookings',$getbooking);
 

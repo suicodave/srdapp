@@ -104,15 +104,32 @@
                             <a href="{{route('index')}}" class="nav-item nav-link active">Home</a>
                             <a href="{{route('about')}}" class="nav-item nav-link">About</a>
                             <a href="{{route('services')}}" class="nav-item nav-link">Washing Plans</a>
+                            <a href="{{route('schedule')}}" class="nav-item nav-link">Available Date and Time</a>
                         </div>
                     </div>
             </nav>
         </div>
         <!-- Top Bar End -->
         @yield('content')
+        <div class="container pt-4 pb-3">
+            @if($errors->any())
+            @error('error_msg')
+            <div class="flash-message alert alert-warning">{{ $message }}</div>
+            @enderror
 
+            @error('save_msg')
+            <div class="flash-message alert alert-success">{{ $message }}</div>
+            @enderror
 
+            @error('updated_msg')
+            <div class="flash-message alert alert-info">{{ $message }}</div>
+            @enderror
 
+            @error('delete_msg')
+            <div class="flash-message alert alert-danger">{{ $message }}</div>
+            @enderror
+            @endif
+        </div>
         <!-- Price Start -->
 <div class="price">
     <div class="container">
@@ -191,6 +208,11 @@
                                     {{ $errors->first('ptime') }}
                                 </div>
 
+                                <div class="form-group pl-4 pr-4 pb-4">
+                                    <label class="col-form-label" for="numvehicle">Number of Vehicle&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
+                                    <input type="number"  class="form-control" name="numvehicle" style="width: 350px;" required autocomplete="off">
+                                    {{ $errors->first('email') }}
+                                </div>
                                 <div class="form-group pl-4 pr-4 pb-4">
                                     <label class="col-form-label" for="ptime">Email ID&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
                                     <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" class="form-control" name="email" style="width: 350px;" required autocomplete="email">

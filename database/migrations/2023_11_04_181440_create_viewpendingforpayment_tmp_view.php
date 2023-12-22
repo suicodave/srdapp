@@ -16,7 +16,7 @@ class CreateViewpendingforpaymentTmpView extends Migration
     {
         $sql = <<<'SQL'
             CREATE VIEW viewpendingforpayment_tmp AS
-            SELECT `a`.`salesid` AS `salesid`,`b`.`id` AS `bookingid`,`b`.`bookingnumber` AS `bookingnumber`,`e`.`price` AS `price`,`b`.`fullName` AS `clients`,`c`.`maker` AS `performedby`,`d`.`vehicletype` AS `vehicletype`,`e`.`servicesname` AS `servicesname`,`g`.`branch_name` AS `branch_name`,`b`.`washDate` AS `washDate`,`b`.`washTime` AS `washTime`,`a`.`updated_at` AS `postingdate`,`a`.`status` AS `status`
+            SELECT `a`.`salesid` AS `salesid`,`b`.`id` AS `bookingid`,b.numbervehicle,`b`.`bookingnumber` AS `bookingnumber`,`e`.`price` AS `price`,`b`.`fullName` AS `clients`,`b`.`employeeid` AS `performedby`,`d`.`vehicletype` AS `vehicletype`,`e`.`servicesname` AS `servicesname`,`g`.`branch_name` AS `branch_name`,`b`.`washDate` AS `washDate`,`b`.`washTime` AS `washTime`,`a`.`updated_at` AS `postingdate`,`a`.`status` AS `status`
             FROM (((((((`pendingforpayment_tmp` `x`
             LEFT JOIN `srdsales` `a` ON((`x`.`salesid` = `a`.`salesid`)))
             LEFT JOIN `booking` `b` ON((`a`.`bookingid` = `b`.`id`)))

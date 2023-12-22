@@ -18,6 +18,7 @@ use Twilio\TwiML\Video\Room;
 Route::get('/',[App\Http\Controllers\AdminController::class,'showIndex'])->name('index');
 Route::get('About Us',[App\Http\Controllers\AdminController::class,'showAbout'])->name('about');
 Route::get('Services',[App\Http\Controllers\AdminController::class,'showServices'])->name('services');
+Route::get('Schedule',[App\Http\Controllers\AdminController::class,'availableschedule'])->name('schedule');
 Route::post('/CreateBooking',[App\Http\Controllers\BookingController::class,'bookservices'])->name('bookednow');
 
 

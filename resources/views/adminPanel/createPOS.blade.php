@@ -73,8 +73,9 @@
                                                         <th>Clients</th>
                                                         <th class="hidden-xs">Transaction Number</th>
                                                         <th class="hidden-480">Description</th>
-                                                        <th>Washing Date and Time</th>
-                                                        <th>Performed By</th>
+                                                        <th>Number of Vehicle/s</th>
+                                                        <th>Detailer</th>
+                                                        <th>Amount Per Service</th>
                                                         <th>Sub Total</th>
                                                     </tr>
                                                 </thead>
@@ -92,13 +93,16 @@
                                                         <td>{{$itemid->clients}}</td>
                                                         <td class="hidden-xs">{{$itemid->bookingnumber}}</td>
                                                         <td class="hidden-480">{{$itemid->servicesname}} for {{$itemid->vehicletype}}</td>
-                                                        <td>{{$itemid->postingdate}}</td>
+                                                        <td style="text-align: right;">{{$itemid->numbervehicle}}</td>
                                                         <td>{{$itemid->performedby}}</td>
+                                                        <?php
+                                                        $subtot = 0;
+                                                        $subtot = $itemid->numbervehicle * $itemid->price;
+                                                        $tot += $subtot;
+                                                        ?>
                                                         <td style="text-align: right;">&#x20B1;&nbsp;{{number_format($itemid->price,2)}}</td>
+                                                        <td style="text-align: right;">&#x20B1;&nbsp;{{number_format($subtot,2)}}</td>
                                                     </tr>
-                                                    <?php
-                                                    $tot += $itemid->price;
-                                                    ?>
                                                     @endforeach
 
                                                 </tbody>
@@ -139,7 +143,7 @@
                                                 <h4 class="pull-right">
                                                     Total Amount Due:
                                                     <span class="red">
-                                                    <input type="text" name="amountdue" readonly style="width:300px; text-align:right;" value="{{number_format($tot,2)}}" id="input2" onkeyup="calculateDifference()">
+                                                    <input type="text" name="amountdue" readonly style="width:300px; text-align:right;" value="{{$tot}}" id="input2" onkeyup="calculateDifference()">
                                                     </span>
                                                 </h4>
                                             </div>

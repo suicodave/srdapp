@@ -36,6 +36,10 @@ use Illuminate\Support\Facades\DB;
                 <div class="select-wrapper pull-right">
 
                         <form action="" method="GET">
+                            <label for="">Date From:</label>
+                                <input type="date" name="datef" class="filter-button" placeholder="from date">
+                            <label for="">Date To:</label>
+                                <input type="date" name="datet" class="filter-button" placeholder="date to">
                                 <select name="status" class="inline-select" id="select1">
                                     <option value="">Select Status</option>
                                     @foreach($status as $itemstatus)
@@ -49,7 +53,7 @@ use Illuminate\Support\Facades\DB;
                                     @endforeach
                                 </select>
                             <input type="submit" name="find" class="filter-button" value="Filter" id=""> |
-                            <a href="#" class="filter-button" onclick="selectElementContents( document.getElementById('example2') );">&nbsp;Copy to Clipboard</a> |&nbsp;
+                            <a href="#" class="filter-button" onclick="selectElementContents( document.getElementById('example1') );">&nbsp;Copy to Clipboard</a> |&nbsp;
                             <a href="" style="float: right;"  class="filter-button" placeholder="Export Data">&nbsp;Export Data&nbsp;</a>
                             @csrf
                         </form>
@@ -63,13 +67,17 @@ use Illuminate\Support\Facades\DB;
                 }else{
                     $statusid = request()->get('status');
                     $vehicleid = request()->get('vehicle');
+                    $startDate = request()->get('datef');
+                    $endDate = request()->get('datet');
                     $getbookingdata = DB::table('viewbookiing')->where('bookingstatus',$statusid)->where('classid',$vehicleid)
-                    ->select('branch_name','bookingnumber','statusname','fullName','mobileNumber','classid','bookingstatus',
-                    'washDate','washTime','email','txnNumber','postingDate','amount','paymentMode','vehicletype','servicesname','detailer')->get();
+                                    ->whereDate('washDate', '>=', $startDate)
+                                    ->whereDate('washDate', '<=', $endDate)
+                                    ->select('branch_name','bookingnumber','statusname','fullName','mobileNumber','classid','bookingstatus',
+                                    'washDate','washTime','email','txnNumber','postingDate','amount','paymentMode','vehicletype','servicesname','detailer')->get();
 
                 ?>
                 <div class="card-body">
-                    <table id="example2" class="table table-bordered table-striped" style="font-size: 14px;">
+                    <table id="example1" class="table table-bordered table-striped" style="font-size: 14px;">
                         <thead>
                             <tr>
                                 <th style="text-align: center;">#</th>

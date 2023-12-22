@@ -315,4 +315,8 @@ class AdminController extends Controller
             return $this->Error3();
             }
     }
+
+    public function availableschedule(){
+        return view('availableschedule');
+    }
 }

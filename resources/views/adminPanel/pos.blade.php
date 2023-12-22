@@ -27,7 +27,7 @@
                                     @endif
                                 </div>
                                 <div class="card-body">
-                                    <table id="example2" class="table table-bordered table-striped" style="font-size: 14px;">
+                                    <table id="example1" class="table table-bordered table-striped" style="font-size: 14px;">
                                         <thead>
                                             <tr>
                                                 <th><input type="checkbox" onclick="toggle(this);"  class="form-control" /></th>

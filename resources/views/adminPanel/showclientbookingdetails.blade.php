@@ -96,7 +96,8 @@
                                             <th class="center">#</th>
                                             <th>SERVICES TYPE</th>
                                             <th class="hidden-xs">BOOKED DATE</th>
-                                            <th>TOTAL</th>
+                                            <th>NUMBER OF VEHICLE</th>
+                                            <th>Amount Per Service Type</th>
                                         </tr>
                                     </thead>
 
@@ -106,8 +107,8 @@
 
                                             <td><a href="#">{{$bookinginfo->servicesid}} for {{$bookinginfo->classid}}</a></td>
                                             <td class="hidden-xs">{{$bookinginfo->created_at}}</td>
-
-                                            <td>&#x20B1;&nbsp;{{$bookinginfo->price}}</td>
+                                            <td style="text-align: center;">{{$bookinginfo->numbervehicle}}</td>
+                                            <td style="text-align: right;">&#x20B1;&nbsp;{{number_format($bookinginfo->price,2)}}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="4" style="text-align: center;"><small>Nothing follows!</small></td>
@@ -120,9 +121,13 @@
 
                             <div class="row">
                                 <div class="col-sm-5 pull-right">
+                                    <?php
+                                    $tot = 0;
+                                    $tot = $bookinginfo->numbervehicle * $bookinginfo->price;
+                                    ?>
                                     <h4 class="pull-right">
                                         Total amount :
-                                        <span class="red">&#x20B1;&nbsp;{{$bookinginfo->price}}</span>
+                                        <span class="red">&#x20B1;&nbsp;{{number_format($tot,2)}}</span>
                                     </h4>
                                 </div>
 
@@ -170,8 +175,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="text" name="browid" id="bid" value="">
-                <input type="text" name="prowid" id="pid" value="">
+                <input type="hidden" name="browid" id="bid" value="">
+                <input type="hidden" name="prowid" id="pid" value="">
                 <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
                 <input type="submit" class="btn btn-info btn-sm" value="Update">
             </div>

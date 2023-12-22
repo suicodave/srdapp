@@ -29,7 +29,34 @@
     <script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/js/ace-extra.min.js')}}"></script>
 
+    <script language="JavaScript">
+        function toggle(source) {
+          var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+          for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i] != source)
+              checkboxes[i].checked = source.checked;
+          }
+        }
+      </script>
+      <script style="text/javascript">
+        function calculateDifference() {
+         var input1 = parseFloat(document.getElementById("input1").value) || 0;
+         var input2 = parseFloat(document.getElementById("input2").value) || 0;
+         var input3 = document.getElementById("input3");
 
+         var difference = input1 - input2;
+         input3.value = formatMoney(difference);
+     }
+
+     function formatMoney(amount) {
+         const formatter = new Intl.NumberFormat('en-PH', {
+             style: 'currency',
+             currency: 'PHP',
+         });
+         return formatter.format(amount);
+     }
+
+     </script>
 </head>
 <style>
 
@@ -538,7 +565,7 @@ h1 {
                 <ul class="submenu">
 
                     <li class="">
-                        <a href="">
+                        <a href="{{route('view-booking')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             View Booking
                         </a>
@@ -585,13 +612,6 @@ h1 {
                     <li class="">
                         <a href="">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            View Booking
-                        </a>
-                        <b class="arrow"></b>
-                    </li>
-                    <li class="">
-                        <a href="">
-                            <i class="menu-icon fa fa-caret-right"></i>
                             View Schedule
                         </a>
                         <b class="arrow"></b>
@@ -631,7 +651,7 @@ h1 {
             @error('delete_msg')
             <div class="flash-message alert alert-danger">{{ $message }}</div>
             @enderror
-        @endif
+            @endif
         </div><!-- /.main-content -->
 
         <div class="footer">

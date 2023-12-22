@@ -66,7 +66,7 @@ class SRDSalesController extends Controller
             $insid->save();
         }
 
-        $getdata = DB::table('viewpendingforpayment_tmp')->select('salesid','bookingid','bookingnumber','vehicletype','servicesname','price','clients','postingdate','performedby')->get();
+        $getdata = DB::table('viewpendingforpayment_tmp')->select('salesid','bookingid','bookingnumber','vehicletype','numbervehicle','servicesname','price','clients','postingdate','performedby')->get();
 
         return view('adminPanel.createPOS')->with('salesid',$getdata);
     }

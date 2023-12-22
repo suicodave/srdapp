@@ -22,10 +22,11 @@ class CreateBookingTable extends Migration
             $table->string('bookingnumber',10);
             $table->string('fullName');
             $table->string('mobileNumber');
+            $table->string('numbervehicle');
             $table->date('washDate');
             $table->time('washTime');
             $table->mediumText('message');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('bookingstatus',120);
             $table->string('paymentMode',120)->nullable();
             $table->string('txnNumber')->nullable();
