@@ -487,7 +487,7 @@ h1 {
                         <b class="arrow"></b>
                     </li>
                     <li class="">
-                        <a href="">
+                        <a href="{{route('scheduling')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             View Schedule
                         </a>
@@ -524,7 +524,7 @@ h1 {
 
                 <ul class="submenu">
                     <li class="">
-                        <a href="">
+                        <a href="{{route('scheduling')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Scheduling
                         </a>
@@ -572,7 +572,7 @@ h1 {
                         <b class="arrow"></b>
                     </li>
                     <li class="">
-                        <a href="">
+                        <a href="{{route('scheduling')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             View Schedule
                         </a>
@@ -610,7 +610,7 @@ h1 {
                 <ul class="submenu">
 
                     <li class="">
-                        <a href="">
+                        <a href="{{route('scheduling')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             View Schedule
                         </a>
