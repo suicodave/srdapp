@@ -113,21 +113,21 @@
         @yield('content')
         <div class="container pt-4 pb-3">
             @if($errors->any())
-            @error('error_msg')
-            <div class="flash-message alert alert-warning">{{ $message }}</div>
-            @enderror
+                @error('error_msg')
+                <div class="flash-message alert alert-warning">{{ $message }}</div>
+                @enderror
 
-            @error('save_msg')
-            <div class="flash-message alert alert-success">{{ $message }}</div>
-            @enderror
+                @error('save_msg')
+                <div class="flash-message alert alert-success">{{ $message }}</div>
+                @enderror
 
-            @error('updated_msg')
-            <div class="flash-message alert alert-info">{{ $message }}</div>
-            @enderror
+                @error('updated_msg')
+                <div class="flash-message alert alert-info">{{ $message }}</div>
+                @enderror
 
-            @error('delete_msg')
-            <div class="flash-message alert alert-danger">{{ $message }}</div>
-            @enderror
+                @error('delete_msg')
+                <div class="flash-message alert alert-danger">{{ $message }}</div>
+                @enderror
             @endif
         </div>
         <!-- Price Start -->
@@ -143,7 +143,6 @@
             use App\Models\Classification;
             use App\Models\Services;
             $getclassifications = Classification::where('status',1)->select('id','vehicletype')->get();
-
             ?>
             @foreach($getclassifications as $itemclass)
 
@@ -262,8 +261,6 @@
 <!--end modal-->
 
     <!-- Footer Start -->
-
-
     <div class="containerf d-flex justify-content-center align-items-center">
         <footer class="mt-5 p-3 bg-white text-blue">
             <div class="row">
