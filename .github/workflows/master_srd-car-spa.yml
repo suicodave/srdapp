@@ -55,6 +55,9 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
+
+      - name: Cache configuration
+        run: php artisan optimize
       
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
