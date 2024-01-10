@@ -426,14 +426,6 @@ h1 {
                 <b class="arrow"></b>
 
                 <ul class="submenu">
-                    <li class="">
-                        <a href="{{route('scheduling')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Scheduling
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
 
                     <li class="">
                         <a href="{{route('showbooking')}}">
@@ -494,7 +486,7 @@ h1 {
                         <b class="arrow"></b>
                     </li>
                     <li class="">
-                        <a href="">
+                        <a href="{{route('getsales')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             View Sales
                         </a>
@@ -568,13 +560,6 @@ h1 {
                         <a href="{{route('view-booking')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             View Booking
-                        </a>
-                        <b class="arrow"></b>
-                    </li>
-                    <li class="">
-                        <a href="{{route('scheduling')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            View Schedule
                         </a>
                         <b class="arrow"></b>
                     </li>

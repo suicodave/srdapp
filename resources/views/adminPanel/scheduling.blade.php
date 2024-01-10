@@ -99,7 +99,7 @@
                                             if ($day ==  $daysched && $currentYear == $yearsched) {
                                                 $twelveHourTime = date("g:i A", strtotime($event->washTime));
                                             ?>
-                                                {{$event->classid}} - {{$event->servicesid}} at {{$twelveHourTime}}
+                                                {{$event->classid}} - {{$event->servicesid}} at {{$twelveHourTime}} - {{$event->bookingstatus}}
                                             <?php
                                             echo '<br>';
                                             }
