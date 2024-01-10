@@ -67,11 +67,7 @@ class SalaryGradeController extends Controller
 
     public function editSalaries( Request $request){
 
-        $check = UserAccount::find('salarygrade',$request->rid);
-        if (!$check) {
-            return $this->Error5();
-        }
-
+        
         $branch = SalaryGrade::find($request->rid);
         if (!$branch) {
             return $this->Error5();

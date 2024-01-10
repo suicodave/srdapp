@@ -152,6 +152,7 @@
                         <h3 style="text-align: left">{{$itemclass->vehicletype}}</h3>
                     </div>
                         <?php
+
                         $getservices = Services::where('classification',$itemclass->id)->where('status','Available')->select('sid','servicesname','price')->get();
                         ?>
                         @foreach($getservices as $itemservice)
@@ -226,17 +227,7 @@
                         </div>
                     </div>
                 </div>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                    const today = new Date();
-                    const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-                    const bookingDate = document.getElementById("bookingDate");
 
-                    // Set minimum selectable date to the first day of the current month
-                    bookingDate.min = currentMonthStart.toISOString().split('T')[0];
-                  });
-
-                  </script>
                 <div class="modal-footer">
                     <input type="hidden" name="rid" id="cid">
                     <input type="hidden" name="sid" id="csid">

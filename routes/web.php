@@ -88,6 +88,7 @@ Route::get('/viewClientServices',[App\Http\Controllers\AdminBookingController::c
 Route::get('/viewSchedule',[App\Http\Controllers\AdminBookingController::class,'bookedschedule'])->name('scheduling');
 Route::get('/View-Users',[App\Http\Controllers\ViewDataController::class,'viewEmployees'])->name('view-user-account');
 Route::get('/View-Booking',[App\Http\Controllers\ViewDataController::class,'viewBookings'])->name('view-booking');
+Route::get('/View-Sales',[App\Http\Controllers\ViewDataController::class,'viewSalesData'])->name('getsales');
 
 
 Route::controller(App\Http\Controllers\Auth\AuthOtpController::class)->group(function(){
