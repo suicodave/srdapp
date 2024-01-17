@@ -37,6 +37,8 @@
   padding: 8px;
   font-size: 16px;
   width: 200px;
+}.custom-cursor {
+    cursor: pointer; /* Change 'pointer' to the desired cursor type */
 }
         </style>
         <!-- Template Stylesheet -->
@@ -159,7 +161,7 @@
                         <div class="price-body">
                             <div class="pl-3" style="text-align:left;">
                                 <i class="far fa-check-circle"></i>&nbsp;
-                                <a  data-toggle="modal" data-id="{{ $itemclass->id }}" data-sid="{{$itemservice->sid}}"  class="text-danger" id="passingID" data-toggle="modal" data-target="#MyModal">{{$itemservice->servicesname}} - {{$itemservice->price}}</a>
+                                <a  data-toggle="modal" data-id="{{ $itemclass->id }}" data-sid="{{$itemservice->sid}}"  class="text-danger custom-cursor" id="passingID" data-toggle="modal" data-target="#MyModal">{{$itemservice->servicesname}} - {{$itemservice->price}}</a>
                             </div>
                         </div>
                         @endforeach
@@ -192,7 +194,7 @@
                                 </div>
                                 <div class="form-group pl-4 pr-4 pb-4">
                                     <label class="col-form-label" for="mobilenumber">Mobile Number&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
-                                    <input type="text" class="form-control" name="mobilenumber" pattern="[0-9]{10}" title="10 numeric characters only" style="width: 150px;" required autocomplete="mobilenumber">
+                                    <input type="text" class="form-control" name="mobilenumber" pattern="[0-9]{11}"  title="11 numeric characters only" style="width: 150px;" required autocomplete="mobilenumber">
                                     {{ $errors->first('mobilenumber') }}
                                 </div>
 
@@ -216,6 +218,20 @@
                                 <div class="form-group pl-4 pr-4 pb-4">
                                     <label class="col-form-label" for="ptime">Email ID&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
                                     <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" class="form-control" name="email" style="width: 350px;" required autocomplete="email">
+                                    {{ $errors->first('email') }}
+                                </div>
+                                <?php 
+                                use App\Models\SRDBranch;
+                                $branches = SRDBranch::where('status','Available')->select('id','branch_name')->get();
+                                ?>
+                                <div class="form-group pl-4 pr-4 pb-4">
+                                    <label class="col-form-label" for="numvehicle">Nearest Branch&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
+                                    <select name="branchcode" class="form-control" style="width: 350px;" required autocomplete="off">
+                                        <option value="">Select Branch</option>
+                                        @foreach($branches as $branch)
+                                        <option value="{{$branch->id}}">{{$branch->branch_name}}</option>
+                                        @endforeach
+                                    </select>
                                     {{ $errors->first('email') }}
                                 </div>
                                 <div class="form-group pl-4 pr-4 pb-4">

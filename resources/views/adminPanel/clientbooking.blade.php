@@ -66,10 +66,18 @@
                                 <td>{{$value->statusname}}</td>
 
                                 <td>
-                                    @if($value->txnNumber == NULL)
-                                    {{'TN is required'}}
+                    
+                                    @if($value->statusname == 'New-Reserved' || $value->statusname == "Pending" && $daysLeft == 1)
+                                    <button class="btn btn-xs btn-danger dpassingID" data-did="{{$value->id}}" onclick="openModal('exampleID')">Cancel this booking!</button>
+
+                                    @elseif($value->statusname == 'Cancelled')
+                                    Nothing follows!
                                     @else
-                                    <a href="{{route('viewclientbookingdetails',['cid' => $value->id])}}">View</a>
+                                        @if($value->txnNumber == NULL)
+                                        {{'TN is required'}}
+                                        @else
+                                        <a href="{{route('viewclientbookingdetails',['cid' => $value->id])}}">View</a>
+                                        @endif
                                     @endif
                                 </td>
 
@@ -84,6 +92,40 @@
     </div>
 </div>
 
+<form action="{{route('cancelbooking')}}" method="POST">
+    <div id="deleteModal" class="modald">
+        <div class="modald-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Booking Cancellation</h4>
+                <button type="button" class="closed" onclick="closeModal()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to cancel this booking?
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="rowid" id="statid">
+                <input type="submit" class="btn btn-danger btn-sm" value="Cancel">
+            </div>
+        </div>
+    </div>
+    @csrf
+    </form>
+    <script type="text/javascript">
+    var modal = document.getElementById("deleteModal");
+    $(".dpassingID").click(function () {
+            var did = $(this).attr('data-did');
 
+            $("#statid").val( did );
+            $('#myModal').modal('show');
+
+        });
+    // Function to open the modal
+    function openModal() {
+      modal.style.display = "block";
+    }
+    function closeModal() {
+      modal.style.display = "none";
+    }
+    </script>
 
 @endsection

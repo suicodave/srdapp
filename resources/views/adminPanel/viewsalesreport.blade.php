@@ -54,7 +54,7 @@ use Illuminate\Support\Facades\DB;
                                 </select>
                             <input type="submit" name="find" class="filter-button" value="Filter" id=""> |
                             <a href="#" class="filter-button" onclick="selectElementContents( document.getElementById('example1') );">&nbsp;Copy to Clipboard</a> |&nbsp;
-                            <a href="" style="float: right;"  class="filter-button" placeholder="Export Data">&nbsp;Export Data&nbsp;</a>
+                            <a href="{{route('exportsales')}}" style="float: right;"  class="filter-button" placeholder="Export Data">&nbsp;Export Sales Data&nbsp;</a>
                             @csrf
                         </form>
                 </div>
@@ -76,8 +76,15 @@ use Illuminate\Support\Facades\DB;
                     $dateTimeEnd = new DateTime($endDate);
                     $formattedDateEnd = $dateTimeEnd->format('m-d-y');
 
+                  
+                    $getauthid = Auth::user()->id;
+                    $getbranchauthid = DB::table('useraccount')->where('employeeid',$getauthid)->pluck('branchid')->first();
+
                     $getbookingdata = DB::table('viewsales')
                                     ->whereBetween('salesdate', [$formattedDatestart,$formattedDateEnd])
+                                    ->where('status',$statusid)
+                                    ->where('vehicleid',$vehicleid)
+                                    ->where('branchcode',$getbranchauthid)
                                     ->select('bookingid','vehicleid','vehicletype','servicesname','bookingnumber','salesdate','tnxtype','actiontakenby',
                                     'amountdue','cashier','invoicenumber','ispaid','status','statusname')->get();
 

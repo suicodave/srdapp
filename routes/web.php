@@ -21,7 +21,6 @@ Route::get('/Services',[App\Http\Controllers\AdminController::class,'showService
 Route::get('/Schedule',[App\Http\Controllers\AdminController::class,'availableschedule'])->name('schedule');
 Route::post('/CreateBooking',[App\Http\Controllers\BookingController::class,'bookservices'])->name('bookednow');
 
-
 Auth::routes();
 
 Route::get('/home',[App\Http\Controllers\HomeController::class,'index'])->name('home');
@@ -90,6 +89,9 @@ Route::get('/View-Users',[App\Http\Controllers\ViewDataController::class,'viewEm
 Route::get('/View-Booking',[App\Http\Controllers\ViewDataController::class,'viewBookings'])->name('view-booking');
 Route::get('/View-Sales',[App\Http\Controllers\ViewDataController::class,'viewSalesData'])->name('getsales');
 
+Route::post('/Cancel-Booking',[App\Http\Controllers\AdminBookingController::class,'bookingcancellation'])->name('cancelbooking');
+Route::get('/Export-Sales',[App\Http\Controllers\AdminBookingController::class,'downloadSales'])->name('exportsales');
+Route::get('/Export-Booking',[App\Http\Controllers\ViewDataController::class,'downloadBooking'])->name('exportbooking');
 
 Route::controller(App\Http\Controllers\Auth\AuthOtpController::class)->group(function(){
     Route::get('otp/login', 'login')->name('otp.login');

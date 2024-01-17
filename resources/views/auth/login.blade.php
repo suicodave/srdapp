@@ -29,7 +29,7 @@
                 </span>
             @enderror
 
-        <input type="text" id="password" placeholder="Password" style="border: 1px solid transparent;" class="fadeIn third @error('password') is-invalid @enderror" name="password"  required autocomplete="current-password">
+        <input type="text" id="password" placeholder="Password" style="border: 1px solid transparent;text-align:center;" class="fadeIn third @error('password') is-invalid @enderror" name="password"  required autocomplete="current-password">
         <script>
             var input = document.getElementById("password");
 

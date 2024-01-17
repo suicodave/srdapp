@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\BookingPriority;
 use App\Models\SRDSales;
+use App\Models\UserAccount;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\FuncCall;
+use Rap2hpoutre\FastExcel\FastExcel;
+use Rap2hpoutre\FastExcel\SheetCollection;
 
 class AdminBookingController extends Controller
 {
@@ -36,25 +39,35 @@ class AdminBookingController extends Controller
     function Error6(){
         return redirect()->back()->withErrors(['error_msg5' => 'Oops! Something went wrong. Duplicate entry!.']);
     }
+    function CancelledError(){
+        return redirect()->back()->withErrors(['error_msg6' => 'Successfully cancelled booking.']);
+    }
     public function viewbooking(){
+        $getauthid = Auth::user()->id;
+        $getbranchauthid = UserAccount::where('employeeid',$getauthid)->pluck('branchid')->first();
+
         $getbooking = DB::table('booking')
                         ->leftJoin('classification_services','classification_services.id','booking.classid')
                         ->leftJoin('srdservices','srdservices.sid','booking.servicesid')
                         ->leftJoin('srdbranch','srdbranch.id','booking.branchcode')
                         ->leftJoin('status','status.statusid','booking.bookingstatus')
+                        ->where('branchcode',$getbranchauthid)
                         ->select('booking.id','status.statusname','booking.bookingnumber','srdbranch.branch_name','booking.fullName','booking.txnNumber','classification_services.vehicletype as classid','booking.mobileNumber','srdservices.servicesname as servicesid','booking.branchcode','booking.washDate','booking.washTime','booking.message','booking.bookingstatus','booking.created_at')->get();
 
         return view('adminPanel.bookingdetails')->with('bookings',$getbooking);
     }
 
     public function viewClientBookings(){ //this is for client booking
+        $getauthid = Auth::user()->id;
+        $getbranchauthid = UserAccount::where('employeeid',$getauthid)->pluck('branchid')->first();
+
         $getclientbooking = DB::table('booking')->where('booking.txnNumber', '!=', '')
                         ->leftJoin('classification_services','classification_services.id','booking.classid')
                         ->leftJoin('srdservices','srdservices.sid','booking.servicesid')
                         ->leftJoin('bookingpriority','bookingpriority.bookingId','booking.id')
                         ->leftJoin('status','status.statusid','booking.bookingstatus')
                         ->leftJoin('srdbranch','srdbranch.id','booking.branchcode')
-
+                        ->where('booking.branchcode',$getbranchauthid)
                         ->select('booking.id','status.statusname','bookingpriority.prioritynumber','srdbranch.branch_name','bookingpriority.dateprocess','bookingpriority.updated_at','booking.bookingnumber','booking.fullName','booking.txnNumber','classification_services.vehicletype as classid','booking.mobileNumber','srdservices.servicesname as servicesid','booking.branchcode','booking.washDate','booking.washTime','booking.message','booking.bookingstatus','booking.created_at')->get();
 
         return view('adminPanel.clientbooking')->with('clientbookings',$getclientbooking);
@@ -136,7 +149,7 @@ class AdminBookingController extends Controller
         ->leftJoin('srdbranch','srdbranch.id','booking.branchcode')
         ->leftJoin('status','status.statusid','booking.bookingstatus')
         ->select('booking.id','booking.bookingnumber','booking.numbervehicle','status.statusname','booking.txnNumber','srdbranch.branch_name','booking.fullName','classification_services.vehicletype as classid','booking.mobileNumber','srdservices.servicesname as servicesid','srdservices.price','booking.branchcode','booking.washDate','booking.washTime','booking.message','booking.bookingstatus','booking.created_at','booking.email')->get();
-
+        
         return view('adminPanel.viewbookingdetails')->with('bookings',$getbooking);
 
     }
@@ -185,7 +198,33 @@ class AdminBookingController extends Controller
                                 return view('adminPanel.scheduling')->with('events',$getbooking);
     }
 
+    public function bookingcancellation(Request $request){
+         $valdate = Validator::make($request->all(),[
+            'id' => 'required',
+         ]);
 
+         //send sms to client for cancellation
+         $rowid = $request->rowid;
+         Booking::where('id',$rowid)->update([
+            'bookingstatus'=>5,
+         ]);
+         return $this->CancelledError();
+    }
+
+    public function downloadSales(){
+        $getauthid = Auth::user()->id;
+        $getbranchauthid = UserAccount::where('employeeid',$getauthid)->pluck('branchid')->first();
+
+        $dataAV = DB::table('viewsales')->where('branchcode',$getbranchauthid)
+        ->select('branch_name as Branch','vehicletype as Vehicle Type','servicesname as Services Name','numbervehicle as Number of Vehicle','price as Price','salesdate as Sales Date','tnxtype as Transaction Type','amountdue as Amount Due','cashier as Cashier','invoicenumber as Invoice Number','actiontakenby as Detailer','statusname as Status')->orderByDesc('bookingid')
+        ->get();
+
+        $sheets = new SheetCollection([
+            'Sales-Report' => $dataAV
+        ]);
+        $date = now()->format('Y-m-d-h-i-s');
+        return (new FastExcel($sheets))->download('Sales-Report' . '-' . $date . '.xlsx');
+    }
 
     public function ShowBookingUsers(){
         return 'userview';

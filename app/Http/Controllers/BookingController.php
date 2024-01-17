@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Notifications\SendSmsNotification;
 
+
 class BookingController extends Controller
 {
     function Fails(){
@@ -35,8 +36,8 @@ class BookingController extends Controller
             'email' => 'required',
             'rid'=>'required',
             'sid'=>'required',
+            'branchcode' => 'required',
        ]);
-
        if($getvalidated->fails()){
             return $this->Fails();
        }
@@ -44,7 +45,7 @@ class BookingController extends Controller
         //$user = auth()->user(); // Assuming you have user authentication
         //$user->notify(new SendSmsNotification());
         //dd($request->all());
-
+       $bcode = $request->branchcode;
         $fullname = $request->fullname;
         $mobilenumber = $request->mobilenumber;
         $numbervehicle = $request->numvehicle;
@@ -65,7 +66,7 @@ class BookingController extends Controller
             $insertbooking = new Booking();
             $insertbooking->classid = $classid;
             $insertbooking->servicesid = $servicesid;
-            $insertbooking->branchcode = '1';
+            $insertbooking->branchcode = $bcode;
             $insertbooking->bookingnumber = $bno;
             $insertbooking->fullName = $fullname;
             $insertbooking->mobileNumber = $mobilenumber;

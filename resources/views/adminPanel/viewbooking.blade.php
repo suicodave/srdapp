@@ -54,7 +54,7 @@ use Illuminate\Support\Facades\DB;
                                 </select>
                             <input type="submit" name="find" class="filter-button" value="Filter" id=""> |
                             <a href="#" class="filter-button" onclick="selectElementContents( document.getElementById('example1') );">&nbsp;Copy to Clipboard</a> |&nbsp;
-                            <a href="" style="float: right;"  class="filter-button" placeholder="Export Data">&nbsp;Export Data&nbsp;</a>
+                            <a href="{{route('exportbooking')}}" style="float: right;"  class="filter-button" placeholder="Export Data">&nbsp;Export Booking&nbsp;</a>
                             @csrf
                         </form>
                 </div>
@@ -69,9 +69,16 @@ use Illuminate\Support\Facades\DB;
                     $vehicleid = request()->get('vehicle');
                     $startDate = request()->get('datef');
                     $endDate = request()->get('datet');
+
+                    
+
+                    $getauthid = Auth::user()->id;
+                    $getbranchauthid = DB::table('useraccount')->where('employeeid',$getauthid)->pluck('branchid')->first();
+
                     $getbookingdata = DB::table('viewbookiing')->where('bookingstatus',$statusid)->where('classid',$vehicleid)
                                     ->whereDate('washDate', '>=', $startDate)
                                     ->whereDate('washDate', '<=', $endDate)
+                                    ->where('branchcode',$getbranchauthid)
                                     ->select('branch_name','bookingnumber','statusname','fullName','mobileNumber','classid','bookingstatus',
                                     'washDate','washTime','email','txnNumber','postingDate','amount','paymentMode','vehicletype','servicesname','detailer')->get();
 

@@ -233,13 +233,18 @@ h1 {
                     </small>
                 </a>
             </div>
-
+            
             <div class="navbar-buttons navbar-header pull-right" role="navigation">
                 <ul class="nav ace-nav">
                     <?php
                     use App\Models\Booking;
                     $bookingall = Booking::select('id')->get()->count();
-                    $bookingnb = Booking::where('bookingstatus','New')->select('id')->get()->count();
+                    $bookingnb = Booking::where('bookingstatus','1')->select('id')->get()->count();
+                    $bookingnb2 = Booking::where('bookingstatus','2')->select('id')->get()->count();
+                    $bookingnb3 = Booking::where('bookingstatus','3')->select('id')->get()->count();
+                    $bookingnb4 = Booking::where('bookingstatus','4')->select('id')->get()->count();
+                    $bookingnb5 = Booking::where('bookingstatus','5')->select('id')->get()->count();
+                  
                     ?>
                     <li class="purple dropdown-modal">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -250,7 +255,7 @@ h1 {
                         <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
                             <li class="dropdown-header">
                                 <i class="ace-icon fa fa-exclamation-triangle"></i>
-                                {{$bookingnb}} Notifications
+                                 Notifications
                             </li>
 
                             <li class="dropdown-content">
@@ -259,15 +264,44 @@ h1 {
                                         <a href="{{route('showbooking')}}">
                                             <div class="clearfix">
                                                 <span class="pull-left">
-                                                    <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
-                                                    New Booking
+                                                    <i class="btn btn-xs no-hover"></i>
+                                                    New-Reserved
                                                 </span>
                                                 <span class="pull-right badge badge-info">{{$bookingnb}}</span>
+                                            </div>
+                                            <div class="clearfix">
+                                                <span class="pull-left">
+                                                    <i class="btn btn-xs no-hover"></i>
+                                                    Pending
+                                                </span>
+                                                <span class="pull-right badge badge-info">{{$bookingnb2}}</span>
+                                            </div>
+                                            <div class="clearfix">
+                                                <span class="pull-left">
+                                                    <i class="btn btn-xs no-hover "></i>
+                                                    On Going
+                                                </span>
+                                                <span class="pull-right badge badge-info">{{$bookingnb3}}</span>
+                                            </div>
+                                            <div class="clearfix">
+                                                <span class="pull-left">
+                                                    <i class="btn btn-xs no-hover"></i>
+                                                    Completed
+                                                </span>
+                                                <span class="pull-right badge badge-info">{{$bookingnb4}}</span>
+                                            </div>
+                                            <div class="clearfix">
+                                                <span class="pull-left">
+                                                    <i class="btn btn-xs no-hover"></i>
+                                                    Canceled
+                                                </span>
+                                                <span class="pull-right badge badge-info">{{$bookingnb5}}</span>
                                             </div>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
+
                         </ul>
                     </li>
 
@@ -329,181 +363,14 @@ h1 {
 
                 <b class="arrow"></b>
             </li>
-            @if(Auth::user()->saStatus == 1)
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-desktop"></i>
-                    <span class="menu-text">
-                        Settings
-                    </span>
 
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-
-                <b class="arrow"></b>
-
-                <ul class="submenu">
-                    <li class="">
-                        <a href="{{route('getStatus')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-
-                            Status
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="{{route('getbranches')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-
-                            Branches
-                        </a>
-                    </li>
-
-                    <li class="">
-                        <a href="{{route('getdesignation')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Designation
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="{{route('getSalaries')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Salary Grade
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="{{route('addEmployee')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Employee
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="{{route('addUserAccounts')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            User Account
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-desktop"></i>
-                    <span class="menu-text">
-                        Services
-                    </span>
-
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-
-                <b class="arrow"></b>
-
-                <ul class="submenu">
-                    <li class="">
-                        <a href="{{route('Classification')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-
-                            Type of Vehicle
-                        </a>
-                    </li>
-
-                    <li class="">
-                        <a href="{{route('Services')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Type of Services
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-list"></i>
-                    <span class="menu-text"> Booking </span>
-
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-
-                <b class="arrow"></b>
-
-                <ul class="submenu">
-
-                    <li class="">
-                        <a href="{{route('showbooking')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Booking
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="{{route('showclientbooking')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Client Booking
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                </ul>
-            </li>
-            <li class="">
-                <a href="{{route('createPayment')}}">
-                    <i class="menu-icon fa glyphicon-envelope"></i>
-                    <span class="menu-text"> Sales </span>
-                </a>
-            </li>
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-users"></i>
-                    <span class="menu-text"> Report </span>
-
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-
-                <b class="arrow"></b>
-
-                <ul class="submenu">
-                    <li class="">
-                        <a href="{{route('view-user-account')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            View User Account
-                        </a>
-                        <b class="arrow"></b>
-                    </li>
-                    <li class="">
-                        <a href="{{route('view-booking')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            View Booking
-                        </a>
-                        <b class="arrow"></b>
-                    </li>
-                    <li class="">
-                        <a href="{{route('scheduling')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            View Schedule
-                        </a>
-                        <b class="arrow"></b>
-                    </li>
-                    <li class="">
-                        <a href="{{route('getsales')}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            View Sales
-                        </a>
-                        <b class="arrow"></b>
-                    </li>
-
-                </ul>
-            </li>
-
-            <li class="">
-                <a href="">
-                    <i class="menu-icon fa glyphicon-envelope"></i>
-                    <span class="menu-text"> Notifications </span>
-                </a>
-            </li>
-            @elseif(Auth::user()->saStatus == 2)
-
+            <?php 
+            use App\Models\UserAccount;
+            use App\Models\Designation;
+            $getAuthDesignation  = UserAccount::where('employeeid',Auth::user()->id)->pluck('designationid')->first();
+            $getDesignation = Designation::where('id',$getAuthDesignation)->pluck('position')->first();
+            ?>
+            @if($getDesignation  === 'Cashier')
             <li class="">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-book"></i>
@@ -564,7 +431,7 @@ h1 {
                         <b class="arrow"></b>
                     </li>
                     <li class="">
-                        <a href="">
+                        <a href="{{route('getsales')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             View Sales
                         </a>
@@ -573,7 +440,7 @@ h1 {
 
                 </ul>
             </li>
-            @else
+            @elseif($getDesignation === 'Detailer')
             <li class="">
                 <a href="{{route('showclientbooking')}}">
                     <i class="menu-icon fa fa-book"></i>
@@ -602,7 +469,7 @@ h1 {
                         <b class="arrow"></b>
                     </li>
                     <li class="">
-                        <a href="">
+                        <a href="{{route('getsales')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             View Sales
                         </a>
@@ -611,6 +478,189 @@ h1 {
 
                 </ul>
             </li>
+                @elseif($getDesignation === 'Supervisor' || Auth::user()->saStatus == 1)
+               
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-desktop"></i>
+                        <span class="menu-text">
+                            Settings
+                        </span>
+    
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+    
+                    <b class="arrow"></b>
+    
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="{{route('getStatus')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+    
+                                Status
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="{{route('getbranches')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+    
+                                Branches
+                            </a>
+                        </li>
+    
+                        <li class="">
+                            <a href="{{route('getdesignation')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Designation
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="{{route('getSalaries')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Salary Grade
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="{{route('addEmployee')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Employee
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="{{route('addUserAccounts')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                User Account
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+    
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-desktop"></i>
+                        <span class="menu-text">
+                            Services
+                        </span>
+    
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+    
+                    <b class="arrow"></b>
+    
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="{{route('Classification')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+    
+                                Type of Vehicle
+                            </a>
+                        </li>
+    
+                        <li class="">
+                            <a href="{{route('Services')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Type of Services
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+    
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-list"></i>
+                        <span class="menu-text"> Booking </span>
+    
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+    
+                    <b class="arrow"></b>
+    
+                    <ul class="submenu">
+    
+                        <li class="">
+                            <a href="{{route('showbooking')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Booking
+                            </a>
+    
+                            <b class="arrow"></b>
+                        </li>
+    
+                        <li class="">
+                            <a href="{{route('showclientbooking')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Client Booking
+                            </a>
+    
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{route('showclientbooking')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Walk-in Client
+                            </a>
+    
+                            <b class="arrow"></b>
+                        </li>
+    
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="{{route('createPayment')}}">
+                        <i class="menu-icon fa glyphicon-envelope"></i>
+                        <span class="menu-text"> Sales </span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-users"></i>
+                        <span class="menu-text"> Report </span>
+    
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+    
+                    <b class="arrow"></b>
+    
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="{{route('view-user-account')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                View User Account
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{route('view-booking')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                View Booking
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{route('scheduling')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                View Schedule
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{route('getsales')}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                View Sales
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+    
+                    </ul>
+                </li>
+    
+                <li class="">
+                    <a href="">
+                        <i class="menu-icon fa glyphicon-envelope"></i>
+                        <span class="menu-text"> Notifications </span>
+                    </a>
+                </li>
+
             @endif
             </ul><!-- /.nav-list -->
 
