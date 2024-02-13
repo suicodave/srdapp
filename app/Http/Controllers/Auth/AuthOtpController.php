@@ -5,10 +5,6 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-
-use Twilio\Rest\Client;
-use Twilio\Jwt\ClientToken;
-
 use App\Models\User;
 use App\Models\UserOtp;
 
@@ -21,29 +17,19 @@ class AuthOtpController extends Controller
 
     public function generate(Request $request)
     {
-        /* Validate Data */
-        $request->validate([
-            'mobile_no' => 'required|exists:users,mobile_no'
-        ]);
+    
         $receiverNumber = $request->mobile_no;
-        //$checknum = User::where('mobile_no',$request->mobile_no)->where('saStatus',1)->select('id')->count();
-        //if($checknum == 0){
-            //return redirect()->route('otp.login')->with('error', 'Not an admin!'); // redirect to other user like tech or cashier
-       // }
+        $checknum = User::where('mobile_no',$request->mobile_no)->select('id')->count();
+        if($checknum == 0){
+            return redirect()->route('otp.login')->with('error', 'Not an admin!'); // redirect to other user like tech or cashier
+        }
         /* Generate An OTP */
         $userOtp = $this->generateOtp($receiverNumber);
-
-        //dd($userOtp);
-        //$accountSid = config('app.twilio')['TWILIO_ACCOUNT_SID'];
-        //$authToken  = config('app.twilio')['TWILIO_AUTH_TOKEN'];
-       //$twilio_number = config('app.twilio')['TWILIO_FROM'];
-        //$client = new Client($accountSid, $authToken);
-
 
         $userOtp->sendSMS($receiverNumber);
 
         return redirect()->route('otp.verification', ['user_id' => $userOtp->user_id])
-                         ->with('success',  "OTP has been sent on Your Mobile Number.");
+                        ->with('success',  "OTP has been sent on Your Mobile Number.");
     }
 
     public function generateOtp($mobile_no)
@@ -59,10 +45,11 @@ class AuthOtpController extends Controller
             return $userOtp;
         }
 
+        $getotp = rand(123456, 999999);
         /* Create a New OTP */
         return UserOtp::create([
             'user_id' => $user->id,
-            'otp' => rand(123456, 999999),
+            'otp' => $getotp,
             'expire_at' => $now->addMinutes(10)
         ]);
     }
@@ -93,8 +80,8 @@ class AuthOtpController extends Controller
         }
 
         $user = User::whereId($request->user_id)->first();
-        if($user->saStatus == 1){
-            if($user->saStatus == 1){
+        
+            if($user->status == 'Active' || $user->status == 'SysAdmin'){
                 User::where('id',$request->user_id)->update([
                     'islogin' =>  1,
 
@@ -120,10 +107,11 @@ class AuthOtpController extends Controller
                     'loginattemp' => $user->loginattemp + 1,
 
                 ]);
+                return redirect()->back()->with('error','You are Banned by Admin! Please Contact the administrator');
 
             }
-            return redirect()->route('otp.login')->with('error', 'Your Otp is not correct');
-        }
-        return redirect()->route('otp.login')->with('error', 'Not allowed number!');
+            return redirect()->route('otp.login')->with('error', 'Not allowes user!');
+        
     }
+    
 }

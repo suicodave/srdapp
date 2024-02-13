@@ -12,8 +12,10 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "laravel/vonage-notification-channel": "^3.3",
         "rap2hpoutre/fast-excel": "^5.3",
-        "twilio/sdk": "^7.12"
+        "twilio/sdk": "^7.13",
+        "vonage/client": "^4.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

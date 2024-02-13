@@ -43,7 +43,7 @@
                         @endif
 
                         <span class="red"><input type="hidden" name="txnno" value="{{$pnid}}">{{$pnid}}</span><br />
-                        <span class="red"><input type="hidden" name="pn" value="{{$counter}}">PN# {{date('myd')}}{{$counter}}</span>
+                        <span class="red"><input type="hidden" name="pn" value="{{date('myd')}}{{$counter}}">PN# {{date('myd')}}{{$counter}}</span>
 
                     <br />
                     <span class="invoice-info-label">Date:</span>
@@ -80,7 +80,7 @@
                                     </li>
 
                                     <li>
-                                        <i class="ace-icon fa fa-caret-right green"></i>Mobile #:&nbsp;{{$bookinginfo->mobileNumber}}
+                                        <i class="ace-icon fa fa-caret-right green"><input type="hidden" name="mnum" value="{{$bookinginfo->mobileNumber}}"></i>Mobile #:&nbsp;{{$bookinginfo->mobileNumber}}
                                     </li>
 
                                     <li>
@@ -99,7 +99,7 @@
                                         <i class="ace-icon fa fa-caret-right green"></i>Booking Status:&nbsp;{{$bookinginfo->statusname}}
                                     </li>
                                     <li>
-                                        <i class="ace-icon fa fa-caret-right green"></i>Branch:&nbsp;{{$bookinginfo->branch_name}}
+                                        <i class="ace-icon fa fa-caret-right green"><input type="hidden" name="bname" value="{{$bookinginfo->branch_name}}"></i>Branch:&nbsp;{{$bookinginfo->branch_name}}
                                     </li>
                                 </ul>
                             </div>

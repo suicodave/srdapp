@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Notifications\SendSmsNotification;
+use Vonage\Client;
+use Vonage\SMS\Message\SMS;
 
 
 class BookingController extends Controller
@@ -25,7 +26,6 @@ class BookingController extends Controller
 
 
     public function bookservices(Request $request){
-
        $getvalidated = Validator::make($request->all(),[
             'fullname'=>'required',
             'mobilenumber'=>'required',
@@ -41,11 +41,10 @@ class BookingController extends Controller
        if($getvalidated->fails()){
             return $this->Fails();
        }
-        // Send an SMS notification before saving to the database
-        //$user = auth()->user(); // Assuming you have user authentication
-        //$user->notify(new SendSmsNotification());
-        //dd($request->all());
-       $bcode = $request->branchcode;
+
+
+        
+        $bcode = $request->branchcode;
         $fullname = $request->fullname;
         $mobilenumber = $request->mobilenumber;
         $numbervehicle = $request->numvehicle;
@@ -62,6 +61,14 @@ class BookingController extends Controller
         if ($checkdatetime > 0) {
             return $this->Error5();
             }else{
+
+            $newPhoneNumber = "63" . substr($mobilenumber, 1);
+            $message = "Hi!" .$fullname. " Your booking number is ".$bno;
+
+            $basic = new \Vonage\Client\Credentials\Basic(env('VONAGE_KEY',null), env('VONAGE_SECRET',null));
+            $client = new Client($basic);
+            $response = $client->sms()
+            ->send(new SMS("$newPhoneNumber",env('VONAGE_NUMBER_FROM',null),"$message"));
 
             $insertbooking = new Booking();
             $insertbooking->classid = $classid;

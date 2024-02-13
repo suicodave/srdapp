@@ -89,6 +89,8 @@ Route::get('/View-Users',[App\Http\Controllers\ViewDataController::class,'viewEm
 Route::get('/View-Booking',[App\Http\Controllers\ViewDataController::class,'viewBookings'])->name('view-booking');
 Route::get('/View-Sales',[App\Http\Controllers\ViewDataController::class,'viewSalesData'])->name('getsales');
 
+Route::get('/View-Walk-in-Cleint',[App\Http\Controllers\AdminBookingController::class,'viewWalkinClient'])->name('showwalkinclient');
+
 Route::post('/Cancel-Booking',[App\Http\Controllers\AdminBookingController::class,'bookingcancellation'])->name('cancelbooking');
 Route::get('/Export-Sales',[App\Http\Controllers\AdminBookingController::class,'downloadSales'])->name('exportsales');
 Route::get('/Export-Booking',[App\Http\Controllers\ViewDataController::class,'downloadBooking'])->name('exportbooking');
@@ -100,5 +102,5 @@ Route::controller(App\Http\Controllers\Auth\AuthOtpController::class)->group(fun
     Route::post('otp/login', 'loginWithOtp')->name('otp.getlogin');
 });
 
-Route::post('/destroy/{user_id}',[App\Http\Controllers\Auth\LogoutController::class,'destroySession'])->name('logouts');
+//Route::post('/destroy/{user_id}',[App\Http\Controllers\Auth\LogoutController::class,'destroySession'])->name('logouts');
 

@@ -7,13 +7,13 @@ use App\Models\Booking;
 use App\Models\BookingPriority;
 use App\Models\SRDSales;
 use App\Models\UserAccount;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use PhpParser\Node\Expr\FuncCall;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Rap2hpoutre\FastExcel\SheetCollection;
+use Vonage\Client;
+use Vonage\SMS\Message\SMS;
 
 class AdminBookingController extends Controller
 {
@@ -161,21 +161,32 @@ class AdminBookingController extends Controller
             'txnno' => 'required',
             'bookingid' => 'required',
             'pn' => 'required',
+            'mnum' => 'required',
+            'bname'=>'required',
         ]);
         if($valdate->fails()){
             return $this->Fails();
         }
-
+        
         $tnxno = $request->txnno;
         $bookingid = $request->bookingid;
         $dateprocess = date('myd');
         $pn = $request->pn;
+        $clientnumber = $request->mnum;
+        $newPhoneNumber = "63" . substr($clientnumber, 1);
+        $branchname = $request->bname;
 
+        $message = "Your priority number is $pn at $branchname, if you fails to show at the schedule time, we will cancel your booking number.";
+        $basic = new \Vonage\Client\Credentials\Basic(env('VONAGE_KEY',null), env('VONAGE_SECRET',null));
+        $client = new Client($basic);
+        $response = $client->sms()
+            ->send(new SMS("$newPhoneNumber",env('VONAGE_NUMBER_FROM',null),"$message"));
+
+    
         Booking::where('id',$bookingid)->update([
-                'txnNumber' => $tnxno,
-                'bookingstatus' => 2,
+            'txnNumber' => $tnxno,
+            'bookingstatus' => 2,
         ]);
-
         $insbookingpn = new BookingPriority();
         $insbookingpn->bookingId = $bookingid;
         $insbookingpn->prioritynumber = $pn;
@@ -183,6 +194,8 @@ class AdminBookingController extends Controller
         $insbookingpn->maker = Auth::user()->name;
         $insbookingpn->status = 2;
         $insbookingpn->save();
+
+        
 
         return redirect()->route('showbooking')->withErrors('updated_msg', 'Successfully updated!');
     }
@@ -224,6 +237,10 @@ class AdminBookingController extends Controller
         ]);
         $date = now()->format('Y-m-d-h-i-s');
         return (new FastExcel($sheets))->download('Sales-Report' . '-' . $date . '.xlsx');
+    }
+
+    public function viewWalkinClient(){
+        return view('adminPanel.walkin');
     }
 
     public function ShowBookingUsers(){

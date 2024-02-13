@@ -55,7 +55,8 @@ class UserAccountController extends Controller
                     ->select('useraccount.id','useraccount.employeeid','useraccount.designationid','useraccount.branchid','useraccount.salarygrade','users.name','srdbranch.branch_name','designation.position','salaraygrade.amount','useraccount.status')
                     ->get();
 
-        //$getEmployee = User::where('status','Active')->where('saStatus','>',1)->select('id','name')->get();
+        $getEmployeeName = User::where('status','Active')->where('saStatus','!=',1)->select('id','name')->get();
+
         $getEmployee = DB::table('users')
                             ->leftJoin('useraccount','useraccount.employeeid','users.id')
                             ->whereNull('useraccount.employeeid')
@@ -67,7 +68,7 @@ class UserAccountController extends Controller
         $getDesignation = Designation::select('id','position')->get();
 
         return view('adminPanel.useraccount')->with('accounts',$getAccount)->with('branches',$getBranch)
-                ->with('designations',$getDesignation)->with('users',$getEmployee)->with('salaries',$getSalary);
+                ->with('designations',$getDesignation)->with('users',$getEmployee)->with('uidusers',$getEmployeeName)->with('salaries',$getSalary);
     }
 
     public function addUserAccounts(Request $request){

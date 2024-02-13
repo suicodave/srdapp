@@ -16,7 +16,7 @@ class SRDBranch extends Model
     protected $fillable = ['id','branch_name','status'];
 
     public function employees() {
-        return $this->hasMany(Employee::class);
+        //return $this->hasMany(Employee::class);
     }
 
 }

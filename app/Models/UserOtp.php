@@ -4,10 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-use Twilio\Rest\Client;
-
-
+use Vonage\Client;
+use Vonage\SMS\Message\SMS;
 class UserOtp extends Model
 {
     use HasFactory;
@@ -15,21 +13,20 @@ class UserOtp extends Model
 
     public function sendSMS($receiverNumber)
     {
+
+        $newPhoneNumber = "63" . substr($receiverNumber, 1);
         $message = "Login OTP is ".$this->otp;
 
-        $account_sid = config('app.twilio')['TWILIO_ACCOUNT_SID'];
-        $auth_token  = config('app.twilio')['TWILIO_AUTH_TOKEN'];
-        $twilio_number = config('app.twilio')['TWILIO_APP_SID'];
-
-
-        $client = new client($account_sid, $auth_token);
-        $msg = $client->messages->create("+639762147193",[
-            "body" => $message,
-            "from" => $twilio_number,
-         ]);
-
-         print($msg->accountSid);
-         dd($message);
+        $basic = new \Vonage\Client\Credentials\Basic(env('VONAGE_KEY',null), env('VONAGE_SECRET',null));
+        $client = new Client($basic);
+        $response = $client->sms()
+            ->send(new SMS("$newPhoneNumber",env('VONAGE_NUMBER_FROM',null),"$message"));
+        $message = $response->current();
+        if($message->getStatus() == 0){
+            echo "The message was sent successfully!\n";
+        }else{
+            echo "The message failed with status:" .$message->getStatus() ."\n";
+        }
 
     }
 }

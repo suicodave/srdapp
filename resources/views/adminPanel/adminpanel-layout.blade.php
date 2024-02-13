@@ -329,9 +329,9 @@ h1 {
                             <li><a href="#"><i class="ace-icon fa fa-cog"></i>{{ __('Settings') }}</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="ace-icon fa fa-power-off"></i>{{ __('Logout') }}</a></li>
+                            <li><a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="ace-icon fa fa-power-off"></i>{{ __('Logouts') }}</a></li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                <input type="userid" name="user_id" value="{{Auth::user()->id}}">
+                                <input type="text" name="user_id" value="{{Auth::user()->id}}">
                                 @csrf
                             </form>
                             @endguest
@@ -395,6 +395,14 @@ h1 {
                         <a href="{{route('showbooking')}}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Booking
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="{{route('showwalkinclient')}}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Walk-in Client
                         </a>
 
                         <b class="arrow"></b>
@@ -479,7 +487,7 @@ h1 {
                 </ul>
             </li>
                 @elseif($getDesignation === 'Supervisor' || Auth::user()->saStatus == 1)
-               
+        
                 <li class="">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-desktop"></i>
@@ -595,7 +603,7 @@ h1 {
                             <b class="arrow"></b>
                         </li>
                         <li class="">
-                            <a href="{{route('showclientbooking')}}">
+                            <a href="{{route('showwalkinclient')}}">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Walk-in Client
                             </a>

@@ -146,7 +146,7 @@
                             <label class="col-form-label" for="employeeid">Employee <small style="color: red;font-weight:bold;">*</small></label>
 
                             <select id="csname" name="employeeid"  class="form-control">
-                                @foreach($users as $itemuser)
+                                @foreach($uidusers as $uid => $itemuser)
                                 <option value="{{$itemuser->id}}">{{$itemuser->name}}</option>
                                 @endforeach
                             </select>
@@ -155,7 +155,7 @@
                         <div  class="col-md-6">
                             <label class="col-form-label" for="branchid">Branch <small style="color: red;font-weight:bold;">*</small></label>
                             <select id="csbranchname" name="branchid" class="form-control">
-                                @foreach($branches as $itembranch)
+                                @foreach($branches as $bid => $itembranch)
                                 <option value="{{$itembranch->id}}">{{$itembranch->branch_name}}</option>
                                 @endforeach
                             </select>
@@ -166,7 +166,7 @@
                         <div  class="col-md-6">
                             <label class="col-form-label" for="designationid">Designation <small style="color: red;font-weight:bold;">*</small></label>
                             <select id="csposition" name="designationid"  class="form-control">
-                                @foreach($designations as $itemdesignation)
+                                @foreach($designations as $did=> $itemdesignation)
                                 <option value="{{$itemdesignation->id}}">{{$itemdesignation->position}}</option>
                                 @endforeach
                             </select>
@@ -175,7 +175,7 @@
                         <div  class="col-md-6">
                             <label class="col-form-label" for="salaryid">Salary Grade <small style="color: red;font-weight:bold;">*</small></label>
                             <select  id="csamount" name="salaryid" class="form-control">
-                                @foreach($salaries as $itemsalary)
+                                @foreach($salaries as $iid => $itemsalary)
                                 <option value="{{$itemsalary->sgid}}">{{$itemsalary->description}}  </option>
                                 @endforeach
                             </select>

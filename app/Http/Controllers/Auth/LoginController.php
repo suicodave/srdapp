@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 class LoginController extends Controller
 {
@@ -18,9 +20,8 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     use AuthenticatesUsers;
-
+   
     /**
      * Where to redirect users after login.
      *
@@ -30,12 +31,16 @@ class LoginController extends Controller
 
     /**
      * Create a new controller instance.
-     *
+     * *
      * @return void
      */
+    
+     
     public function __construct()
     {
-
+        User::where('islogin',1)->update([
+            'islogin' => 0,
+        ]);
         $this->middleware('guest')->except('logout');
     }
 }

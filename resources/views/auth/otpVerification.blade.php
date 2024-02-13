@@ -1,7 +1,19 @@
 @extends('layouts')
 
 @section('content')
-<div class="container">
+<style>
+.centered-div {
+  width: 50%;
+  height: 50vh; /* You can adjust the height as needed */
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+</style>
+<div class="container centered-div">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -26,7 +38,7 @@
 
                             <div class="col-md-6">
                                 <input id="otp" type="text" class="form-control @error('otp') is-invalid @enderror" name="otp" value="{{ old('otp') }}" required autocomplete="otp" autofocus placeholder="Enter OTP">
-
+                                
                                 @error('otp')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

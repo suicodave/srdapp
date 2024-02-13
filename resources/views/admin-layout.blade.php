@@ -201,7 +201,6 @@
                                 <div class="form-group pl-4 pr-4 pb-4">
                                     <label class="col-form-label" for="pdate">Preferred Date&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
                                     <input type="date" id="bookingDate" name="pdate"  class="form-control booking-date-picker" style="width: 150px;" required autocomplete="pdate">
-
                                     {{ $errors->first('pdate') }}
                                 </div>
                                 <div class="form-group pl-4 pr-4 pb-4">

@@ -24,7 +24,7 @@
             @enderror
 
             <div class="form-check pb-4">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit"  class="btn btn-primary">
                     {{ __('Generate OTP') }}
                 </button>
             </div>
