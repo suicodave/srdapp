@@ -180,7 +180,7 @@ class AdminBookingController extends Controller
         $basic = new \Vonage\Client\Credentials\Basic(env('VONAGE_KEY',null), env('VONAGE_SECRET',null));
         $client = new Client($basic);
         $response = $client->sms()
-            ->send(new SMS("$newPhoneNumber",env('VONAGE_NUMBER_FROM',null),"$message"));
+            ->send(new SMS("$newPhoneNumber",env('VONAGE_SMS_FROM',null),"$message"));
 
     
         Booking::where('id',$bookingid)->update([
