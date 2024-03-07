@@ -44,8 +44,18 @@ class AdminBookingController extends Controller
     }
     public function viewbooking(){
         $getauthid = Auth::user()->id;
-        $getbranchauthid = UserAccount::where('employeeid',$getauthid)->pluck('branchid')->first();
+       
+       if($getauthid == 1){
+        $getbooking = DB::table('booking')
+        ->leftJoin('classification_services','classification_services.id','booking.classid')
+        ->leftJoin('srdservices','srdservices.sid','booking.servicesid')
+        ->leftJoin('srdbranch','srdbranch.id','booking.branchcode')
+        ->leftJoin('status','status.statusid','booking.bookingstatus')
+        ->select('booking.id','status.statusname','booking.bookingnumber','srdbranch.branch_name','booking.fullName','booking.txnNumber','classification_services.vehicletype as classid','booking.mobileNumber','srdservices.servicesname as servicesid','booking.branchcode','booking.washDate','booking.washTime','booking.message','booking.bookingstatus','booking.created_at')->get();
 
+        return view('adminPanel.bookingdetails')->with('bookings',$getbooking);
+       }else{
+        $getbranchauthid = UserAccount::where('employeeid',$getauthid)->pluck('branchid')->first();
         $getbooking = DB::table('booking')
                         ->leftJoin('classification_services','classification_services.id','booking.classid')
                         ->leftJoin('srdservices','srdservices.sid','booking.servicesid')
@@ -55,6 +65,10 @@ class AdminBookingController extends Controller
                         ->select('booking.id','status.statusname','booking.bookingnumber','srdbranch.branch_name','booking.fullName','booking.txnNumber','classification_services.vehicletype as classid','booking.mobileNumber','srdservices.servicesname as servicesid','booking.branchcode','booking.washDate','booking.washTime','booking.message','booking.bookingstatus','booking.created_at')->get();
 
         return view('adminPanel.bookingdetails')->with('bookings',$getbooking);
+       }
+       
+
+        
     }
 
     public function viewClientBookings(){ //this is for client booking
