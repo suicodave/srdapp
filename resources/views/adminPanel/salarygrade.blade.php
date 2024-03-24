@@ -91,7 +91,7 @@
                             </div>
                             <div  class="col-md-6">
                                 <label class="col-form-label" for="amount">Amount <small style="color: red;font-weight:bold;">*</small></label>
-                                <input type="text" name="amount" id="" class="form-control">
+                                <input type="number" name="amount" id="" class="form-control">
                                 {{ $errors->first('amount') }}
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                         </div>
                         <div  class="col-md-6">
                             <label class="col-form-label" for="amount">Amount <small style="color: red;font-weight:bold;">*</small></label>
-                            <input type="text" name="amount" id="camount" class="form-control">
+                            <input type="number" name="amount" id="camount" class="form-control">
                             {{ $errors->first('amount') }}
                         </div>
                     </div>

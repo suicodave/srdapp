@@ -43,7 +43,7 @@ class SalaryGradeController extends Controller
             'scode' => 'required',
             'description' => 'required',
             'period' => 'required',
-            'amount' => 'required',
+            'amount' => 'required|numeric|regex:/^\d+$/',
         ]);
 
         if($checkdata->fails()){
@@ -77,7 +77,7 @@ class SalaryGradeController extends Controller
             'scode' => 'required',
             'description' => 'required',
             'period' => 'required',
-            'amount' => 'required',
+            'amount' => 'required|numeric|regex:/^\d+$/',
             'rid' => 'required',
         ]);
         if($checkdata->fails()){
