@@ -53,7 +53,7 @@
                                     <i class="ace-icon fa fa-pencil bigger-120"></i></a>  |
                                         <button class="btn btn-xs btn-danger dpassingID" data-did="{{$itemuser->id}}" onclick="openModal('exampleID')"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
                                         @if($itemuser->loginattemp == 3)
-                                        |&nbsp;<button class="btn btn-xs btn-danger UnlockpassingID" data-unlockid="{{$itemuser->id}}" onclick="openModalU('exampleIDUn')"><i class="ace-icon fa fa-lock bigger-120">{{$itemuser->id}}</i></button>
+                                        |&nbsp;<button class="btn btn-xs btn-danger UnlockpassingID" data-unlockid="{{$itemuser->id}}" onclick="openModalU('exampleIDUn')"><i class="ace-icon fa fa-lock bigger-120"></i></button>
                                          @else
                                         &nbsp;<button class="btn btn-xs btn-success LockpassingID" disabled><i class="ace-icon fa fa-unlock bigger-120"></i></button> 
                                         @endif
