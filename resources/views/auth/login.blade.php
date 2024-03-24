@@ -19,7 +19,11 @@
         SRD CAR SPA
         </div>
 
-
+        @if (session('throttleMessage'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('throttleMessage') }} Please try again in {{ session('throttleSeconds') }} seconds.
+        </div>
+    @endif
         <!-- Login Form -->
         <form method="POST" action="{{ route('login') }}">
         <input type="text"  id="email" class="fadeIn second @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="false" autofocus placeholder="Email">
@@ -28,7 +32,7 @@
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
-
+       
         <input type="text" id="password" placeholder="Password" style="border: 1px solid transparent;text-align:center;" class="fadeIn third @error('password') is-invalid @enderror" name="password"  required autocomplete="current-password">
         <script>
             var input = document.getElementById("password");
@@ -70,13 +74,8 @@
                     {{ __('Login') }}
                 </button>
 
-                @if (Route::has('password.request'))
-                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                        {{ __('Forgot password?') }}
-                    </a>
-                @endif
+                <br>
             </div>
-
         @csrf
         </form>
 

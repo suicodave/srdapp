@@ -52,6 +52,11 @@
                                     class="btn btn-xs btn-info text-danger passingID" data-toggle="modal" data-target="#MyModal" title="Edit">
                                     <i class="ace-icon fa fa-pencil bigger-120"></i></a>  |
                                         <button class="btn btn-xs btn-danger dpassingID" data-did="{{$itemuser->id}}" onclick="openModal('exampleID')"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
+                                        @if($itemuser->loginattemp == 3)
+                                        |&nbsp;<button class="btn btn-xs btn-danger UnlockpassingID" data-unlockid="{{$itemuser->id}}" onclick="openModalU('exampleIDUn')"><i class="ace-icon fa fa-lock bigger-120">{{$itemuser->id}}</i></button>
+                                         @else
+                                        &nbsp;<button class="btn btn-xs btn-success LockpassingID" disabled><i class="ace-icon fa fa-unlock bigger-120"></i></button> 
+                                        @endif
                                     </td>
                             </tr>
                         @endforeach
@@ -310,5 +315,45 @@
     }
     </script>
     <!--end delete-->
+
+
+    <!--to unlock account-->
+    <form action="{{route('unlockAccount')}}" method="POST">
+    <div id="unlockModal" class="modald">
+        <div class="modald-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Unlock User Account</h4>
+                <button type="button" class="closed" onclick="closeModal()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to unlock this account?
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="unlrowid" id="unlockuserid">
+                <button type="button" class="btn btn-default btn-sm" onclick="closeModal()" data-dismiss="modal">No</button>
+                <input type="submit" class="btn btn-danger btn-sm" value="Yes">
+            </div>
+        </div>
+    </div>
+    @csrf
+    </form>
+    <script type="text/javascript">
+        var modal = document.getElementById("unlockModal");
+        $(".UnlockpassingID").click(function () {
+                var unlockid = $(this).attr('data-unlockid');
+                $("#unlockuserid").val( unlockid );
+                $('#myModal').modal('show');
+    
+            });
+        // Function to open the modal
+        function openModalU() {
+          modal.style.display = "block";
+        }
+        function closeModal() {
+          modal.style.display = "none";
+        }
+        </script>
+
+        
 @endsection
 

@@ -95,11 +95,18 @@ Route::post('/Cancel-Booking',[App\Http\Controllers\AdminBookingController::clas
 Route::get('/Export-Sales',[App\Http\Controllers\AdminBookingController::class,'downloadSales'])->name('exportsales');
 Route::get('/Export-Booking',[App\Http\Controllers\ViewDataController::class,'downloadBooking'])->name('exportbooking');
 
+Route::post('Unlock-Account',[App\Http\Controllers\UserAccountController::class,'postUnlock'])->name('unlockAccount');
+Route::get('Change-Password',[App\Http\Controllers\UserAccountController::class,'passChange'])->name('changepass');
+Route::post('Update-Password',[App\Http\Controllers\UserAccountController::class,'editpassword'])->name('updatepass');
+
+Route::post('Reset-Password',[App\Http\Controllers\Auth\ResetPasswordController::class,'editUserPassword'])->name('changepassword');
+
 Route::controller(App\Http\Controllers\Auth\AuthOtpController::class)->group(function(){
     Route::get('otp/login', 'login')->name('otp.login');
     Route::post('otp/generate', 'generate')->name('otp.generate');
     Route::get('otp/verification/{user_id}', 'verification')->name('otp.verification');
     Route::post('otp/login', 'loginWithOtp')->name('otp.getlogin');
+
 });
 
 //Route::post('/destroy/{user_id}',[App\Http\Controllers\Auth\LogoutController::class,'destroySession'])->name('logouts');

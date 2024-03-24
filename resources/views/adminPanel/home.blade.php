@@ -24,16 +24,6 @@
 
         <div class="page-content">
 
-            <div class="page-header">
-                <h1>
-                    Dashboard
-                    <small>
-                        <i class="ace-icon fa fa-angle-double-right"></i>
-                        {{Route::currentRouteName()}}
-                    </small>
-                </h1>
-            </div><!-- /.page-header -->
-
             <div class="row">
                 <div class="col-xs-12">
                     <!-- PAGE CONTENT BEGINS -->
@@ -49,7 +39,7 @@
                                     </h2>
                                     <div class="clearfix">
                                         <div class="grid4" style="background-color: #20A39E;">
-                                            <h2 style="font-weight: bold;">Total Services</h2>
+                                            <h2 style="font-weight: bold;">Total Service</h2>
                                             <h2 class="bigger pull-right"><br><span>{{$numservices}}&nbsp;&nbsp;</span></h2>
                                         </div>
                                         <div class="grid4" style="background-color: #EF5B5B;">
@@ -67,15 +57,11 @@
                                     </div>
                                     <br>
                                     <div class="clearfix pt-3">
-                                        <div class="grid2">
-                                            <h2 style="font-weight: bold;">Total Profit</h2>
-                                            <h2 class="bigger pull-right">&#8369;&nbsp;<br><span>1,255</span></h2>
-                                        </div>
-                                        <div class="grid2">
-                                            <h2 style="font-weight: bold;">Total Income</h2>
+                                        <div class="grid2" style="text-align: left;">
+                                            <h2 style="font-weight: bold;text-align:left;">Total Sales</h2>
                                             <br>
                                                 @foreach($TotalSales as $totsales)
-                                                <h1 class="pull-right;">&#8369;&nbsp;{{number_format($totsales->total_sales,2)}}</h1>
+                                                <h1 class="pull-right;" style="text-align: left;">&#8369;&nbsp;{{number_format($totsales->total_sales,2)}}</h1>
                                                 @endforeach
 
                                         </div>

@@ -41,6 +41,14 @@ class UserAccountController extends Controller
         return redirect()->back()->withErrors(['error_msg' => 'Oops! User not found.']);
     }
 
+    function Error7(){
+        return redirect()->back()->withErrors(['error_msg' => 'Account already unlocked!']);
+    }
+    function Error8(){
+        return redirect()->back()->withErrors(['error_msg' => 'Account already locked!']);
+    }
+
+
     public function showSalaries(){
         $getsalary = SalaryGrade::select('sgid','sgcode','description','period','amount')->get();
         return view('adminPanel.salarygrade')->with('salaries',$getsalary);
@@ -216,5 +224,25 @@ class UserAccountController extends Controller
                 UserAccount::where('id',$uid)->delete();
                 return $this->Error3();
             }
+    }
+
+    public function postUnlock(Request $request){
+        $checkid = Validator::make($request->all(),[
+            'unlrowid' => 'required'
+        ]);
+        if($checkid->fails()){
+            return $this->Fails();
+        }
+        $unlrowid = $request->unlrowid;
+
+        User::where('id',$unlrowid)->update([
+            'acountlock' => 0,
+            'loginattemp' => 0,
+        ]);
+        return $this->Error7();
+    }
+
+    public function passChange(){
+        return view('adminPanel.changepass');
     }
 }

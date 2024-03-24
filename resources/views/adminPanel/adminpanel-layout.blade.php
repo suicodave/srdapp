@@ -323,10 +323,12 @@ h1 {
                                 @endif
 
                                 @if (Route::has('register'))
-                                <li><a href="#"><i class="ace-icon fa fa-cog"></i>{{ __('Register') }}</a></li>
+                                <li><a href=""><i class="ace-icon fa fa-cog"></i>{{ __('Register') }}</a></li>
                                 @endif
                             @else
-                            <li><a href="#"><i class="ace-icon fa fa-cog"></i>{{ __('Settings') }}</a></li>
+                            <li><a href="{{route('changepass')}}" class="btn btn-xs btn-warning"><i class="ace-icon fa fa-cog"></i>{{ __('Change Password') }}</a></li>
+                           
+                            
                             <li class="divider"></li>
 
                             <li><a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="ace-icon fa fa-power-off"></i>{{ __('Logouts') }}</a></li>
@@ -342,6 +344,7 @@ h1 {
         </div><!-- /.navbar-container -->
     </div>
 
+    
     <div class="main-container ace-save-state" id="main-container">
         <script type="text/javascript">
             try{ace.settings.loadState('main-container')}catch(e){}
@@ -616,7 +619,7 @@ h1 {
                 <li class="">
                     <a href="{{route('createPayment')}}">
                         <i class="menu-icon fa glyphicon-envelope"></i>
-                        <span class="menu-text"> Sales </span>
+                        <span class="menu-text"> Awaiting Payment </span>
                     </a>
                 </li>
                 <li class="">

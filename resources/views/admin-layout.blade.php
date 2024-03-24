@@ -143,8 +143,17 @@
         <div class="row">
             <?php
             use App\Models\Classification;
+            use App\Models\Booking;
             use App\Models\Services;
             $getclassifications = Classification::where('status',1)->select('id','vehicletype')->get();
+            $gettime = Booking::select('washTime')->get();
+            $disabled_times = array();
+            if($gettime->count()>0 ){
+               foreach ($gettime as $key => $disTime) {
+                $disabled_times[] = $disTime->washTime;
+               }
+            }
+           
             ?>
             @foreach($getclassifications as $itemclass)
 
@@ -197,15 +206,19 @@
                                     <input type="text" class="form-control" name="mobilenumber" pattern="[0-9]{11}"  title="11 numeric characters only" style="width: 150px;" required autocomplete="mobilenumber">
                                     {{ $errors->first('mobilenumber') }}
                                 </div>
-
+                                <?php 
+                                $currentDate = date("Y-m-d");
+                                $current_time = date("H:i");
+                                ?>
                                 <div class="form-group pl-4 pr-4 pb-4">
                                     <label class="col-form-label" for="pdate">Preferred Date&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
-                                    <input type="date" id="bookingDate" name="pdate"  class="form-control booking-date-picker" style="width: 150px;" required autocomplete="pdate">
+                                    <input type="date" id="bookingDate" name="pdate" min="{{$currentDate}}" class="form-control booking-date-picker" style="width: 150px;" required autocomplete="pdate">
                                     {{ $errors->first('pdate') }}
                                 </div>
                                 <div class="form-group pl-4 pr-4 pb-4">
                                     <label class="col-form-label" for="ptime">Preferred Time&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
-                                    <input type="time" class="form-control" name="ptime" style="width: 150px;" required autocomplete="ptime">
+                                    <input type="time" class="form-control" name="ptime" min="{{$current_time}}" style="width: 150px;" required autocomplete="ptime">
+                                   
                                     {{ $errors->first('ptime') }}
                                 </div>
 
