@@ -153,7 +153,7 @@
                 $disabled_times[] = $disTime->washTime;
                }
             }
-           
+
             ?>
             @foreach($getclassifications as $itemclass)
 
@@ -206,19 +206,57 @@
                                     <input type="text" class="form-control" name="mobilenumber" pattern="[0-9]{11}"  title="11 numeric characters only" style="width: 150px;" required autocomplete="mobilenumber">
                                     {{ $errors->first('mobilenumber') }}
                                 </div>
-                                <?php 
-                                $currentDate = date("Y-m-d");
+                                <?php
+                                $curtDate = date("Y-m-d");
                                 $current_time = date("H:i");
                                 ?>
                                 <div class="form-group pl-4 pr-4 pb-4">
                                     <label class="col-form-label" for="pdate">Preferred Date&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
-                                    <input type="date" id="bookingDate" name="pdate" min="{{$currentDate}}" class="form-control booking-date-picker" style="width: 150px;" required autocomplete="pdate">
+                                    <input type="date" id="bookingDate" name="pdate" min="{{$curtDate}}" class="form-control booking-date-picker" style="width: 150px;" required autocomplete="pdate">
+                                    <div id="errorContainer"></div>
                                     {{ $errors->first('pdate') }}
+                                    <script>
+                                        // Get the current date in YYYY-MM-DD format
+                                        var currentDate = new Date().toISOString().split('T')[0];
+                                        document.getElementById('date_input').setAttribute('min', currentDate);
+
+                                        // Attach event listener to the form submit event
+                                        document.getElementById('myForm').addEventListener('submit', function(event) {
+                                            var dateInput = document.getElementById('date_input').value;
+
+                                            if (dateInput < currentDate) {
+                                                event.preventDefault(); // Prevent form submission
+                                                displayError('Date must be after ' + currentDate);
+                                            }
+                                        });
+
+                                        // Function to display error message below input
+                                        function displayError(message) {
+                                            var errorContainer = document.getElementById('errorContainer');
+                                            errorContainer.innerHTML = '<span style="color: red;">' + message + '</span>';
+                                        }
+                                    </script>
                                 </div>
                                 <div class="form-group pl-4 pr-4 pb-4">
                                     <label class="col-form-label" for="ptime">Preferred Time&nbsp;<small style="color: red;font-weight:bold;">*</small></label>
-                                    <input type="time" class="form-control" name="ptime" min="{{$current_time}}" style="width: 150px;" required autocomplete="ptime">
-                                   
+                                    <input type="time" id="ptime" class="form-control" name="ptime" style="width: 150px;" required autocomplete="ptime" onchange="checkTimeValidity()">
+                                   <div class="error-message" id="timeErrorMessage"></div>
+                                    <script>
+                                        function checkTimeValidity() {
+                                            var input = document.getElementById('ptime');
+                                            var errorMessage = document.getElementById('timeErrorMessage');
+                                            var minTime = '07:00'; // Set the minimum time
+                                            var maxTime = '21:00'; // Set the maximum time
+
+                                            if (input.value < minTime || input.value > maxTime) {
+                                                errorMessage.textContent = 'Time must be between ' + minTime + ' and ' + maxTime;
+                                                errorMessage.style.display = 'block';
+                                                input.value = ''; // Clear the input value
+                                            } else {
+                                                errorMessage.style.display = 'none';
+                                            }
+                                        }
+                                        </script>
                                     {{ $errors->first('ptime') }}
                                 </div>
 
@@ -232,7 +270,7 @@
                                     <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" class="form-control" name="email" style="width: 350px;" required autocomplete="email">
                                     {{ $errors->first('email') }}
                                 </div>
-                                <?php 
+                                <?php
                                 use App\Models\SRDBranch;
                                 $branches = SRDBranch::where('status','Available')->select('id','branch_name')->get();
                                 ?>
